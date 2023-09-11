@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useRef } from "react";
-import { EsbuildService } from "../App";
+import { EsbuildService, html } from "../App";
 import { unpkgPathPlugin } from "../plugins/unpkg-path-plugin";
 import { fetchPlugin } from "../plugins/fetch-plugin";
 
@@ -18,6 +18,7 @@ const Form = ({ setInput, serviceRef, input, iframeRef }: Props) => {
     if (!serviceRef?.current) {
       return;
     }
+    if (iframeRef.current) iframeRef.current.srcdoc = html;
 
     const result = await serviceRef.current.build({
       entryPoints: ["index.js"],
