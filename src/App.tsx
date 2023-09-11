@@ -22,6 +22,11 @@ function App() {
     startService();
   }, []);
 
+  const html = `
+<script>
+${code}
+</script>
+`;
   return (
     <main
       style={{
@@ -39,11 +44,9 @@ function App() {
         serviceRef={serviceRef}
       />
       <pre>{code} </pre>
-      <iframe sandbox="" srcDoc={html}></iframe>
+      <iframe sandbox="allow-scripts" srcDoc={html}></iframe>
     </main>
   );
 }
-const html = `
-<h1>Test</h1>
-`;
+
 export default App;

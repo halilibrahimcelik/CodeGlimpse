@@ -30,12 +30,6 @@ const Form = ({ setInput, serviceRef, input, setCode }: Props) => {
       },
     });
     setCode(result.outputFiles[0].text);
-    try {
-      console.log(result.outputFiles[0].text);
-      eval(result.outputFiles[0].text);
-    } catch (error) {
-      alert(error);
-    }
   };
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
