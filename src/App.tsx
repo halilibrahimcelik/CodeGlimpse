@@ -7,7 +7,8 @@ export type EsbuildService = esbuild.Service;
 
 function App() {
   const [input, setInput] = useState<string>("");
-  const [code, setCode] = useState<string>("");
+  //const [code, setCode] = useState<string>("");
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const serviceRef = useRef<EsbuildService | null>(null);
 
   const startService = async () => {
@@ -23,9 +24,17 @@ function App() {
   }, []);
 
   const html = `
-<script>
-${code}
-</script>
+  <html>
+    <head></head>
+    <body>
+      <div id="root"></div>
+      <script>
+       window.addEventListener("message", (event) => {
+        eval(event.data);
+       },false)
+      </script>
+    </body>
+    </html>
 `;
   return (
     <main
@@ -40,11 +49,11 @@ ${code}
       <Form
         setInput={setInput}
         input={input}
-        setCode={setCode}
+        iframeRef={iframeRef}
         serviceRef={serviceRef}
       />
-      <pre>{code} </pre>
-      <iframe sandbox="allow-scripts" srcDoc={html}></iframe>
+
+      <iframe ref={iframeRef} sandbox="allow-scripts" srcDoc={html} />
     </main>
   );
 }
