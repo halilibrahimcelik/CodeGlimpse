@@ -1,23 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useRef } from "react";
-import { EsbuildService } from "../App";
+import { EsbuildService, html } from "../App";
 import { unpkgPathPlugin } from "../plugins/unpkg-path-plugin";
 import { fetchPlugin } from "../plugins/fetch-plugin";
 
 type Props = {
   setInput: (input: any) => void;
-  setCode: (code: any) => void;
+  iframeRef: React.MutableRefObject<HTMLIFrameElement | null>;
   input: string;
   serviceRef: React.MutableRefObject<EsbuildService | null>;
 };
 const env = ["process", "env", "NODE_ENV"].join(".");
-const Form = ({ setInput, serviceRef, input, setCode }: Props) => {
+const Form = ({ setInput, serviceRef, input, iframeRef }: Props) => {
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!serviceRef?.current) {
       return;
     }
+    if (iframeRef.current) iframeRef.current.srcdoc = html;
 
     const result = await serviceRef.current.build({
       entryPoints: ["index.js"],
@@ -29,13 +30,11 @@ const Form = ({ setInput, serviceRef, input, setCode }: Props) => {
         global: "window",
       },
     });
-    setCode(result.outputFiles[0].text);
-    try {
-      console.log(result.outputFiles[0].text);
-      eval(result.outputFiles[0].text);
-    } catch (error) {
-      alert(error);
-    }
+    // setCode(result.outputFiles[0].text);
+    iframeRef.current?.contentWindow?.postMessage(
+      result.outputFiles[0].text,
+      "*"
+    );
   };
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
