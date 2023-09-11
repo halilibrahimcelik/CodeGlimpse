@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Form from "./components/Form";
 
 import * as esbuild from "esbuild-wasm";
+import CodeEditor from "./components/CodeEditor";
 
 export type EsbuildService = esbuild.Service;
 export const html = `
@@ -52,6 +53,7 @@ function App() {
         margin: "0 auto",
       }}
     >
+      <CodeEditor />
       <Form
         setInput={setInput}
         input={input}
