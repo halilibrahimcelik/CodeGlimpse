@@ -53,7 +53,10 @@ function App() {
         margin: "0 auto",
       }}
     >
-      <CodeEditor />
+      <CodeEditor
+        initialValue="const a=1"
+        onChange={(value) => setInput(value)}
+      />
       <Form
         setInput={setInput}
         input={input}
