@@ -43,9 +43,13 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
       console.log(error);
     }
   };
+
   return (
-    <>
-      <button onClick={handleFormat}>Format</button>
+    <section className="text-white px-4 sm:px-8 py-2 sm:py-3 dark:bg-primaryBgLight  ">
+      <button className="text-orange text-3xl " onClick={handleFormat}>
+        Format
+      </button>
+      <h1 className="text-3xl text-primaryBgDark dark:text-white">Hello</h1>
 
       <Editor
         theme="vs-dark"
@@ -66,7 +70,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
         }}
         loading={<GridLoader color="#36d7b7" margin={3} />}
       />
-    </>
+    </section>
   );
 };
 

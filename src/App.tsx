@@ -3,6 +3,7 @@ import Form from "./components/Form";
 
 import * as esbuild from "esbuild-wasm";
 import CodeEditor from "./components/CodeEditor";
+import DarkMode from "./components/DarkMode";
 
 export type EsbuildService = esbuild.Service;
 export const html = `
@@ -44,15 +45,8 @@ function App() {
   }, []);
 
   return (
-    <main
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        gap: "1rem",
-        margin: "0 auto",
-      }}
-    >
+    <main>
+      <DarkMode />
       <CodeEditor
         initialValue="const a=1"
         onChange={(value) => setInput(value)}
