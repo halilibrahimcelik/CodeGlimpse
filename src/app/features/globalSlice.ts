@@ -6,7 +6,7 @@ const initialState: GlobalState = {
       ? true
       : localStorage.getItem("theme") === null
       ? true
-      : true,
+      : false,
 };
 interface GlobalState {
   darkMode: boolean;
