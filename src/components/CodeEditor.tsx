@@ -5,6 +5,8 @@ import { GridLoader } from "react-spinners";
 import prettier from "prettier/standalone";
 import babelPlugin from "prettier/plugins/babel";
 import estreePlugin from "prettier/plugins/estree";
+import { useSelector } from "react-redux";
+import { selectDarkMode } from "../app/features/globalSlice";
 
 interface CodeEditorProps {
   initialValue: string;
@@ -12,7 +14,9 @@ interface CodeEditorProps {
 }
 const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
+  const isDarkMode = useSelector(selectDarkMode);
 
+  console.log(isDarkMode);
   const handleEditorDidMount = (editor: editor.IStandaloneCodeEditor) => {
     editorRef.current = editor;
     editor.onDidChangeModelContent(() => {
@@ -45,14 +49,17 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
   };
 
   return (
-    <section className="text-white px-4 sm:px-8 py-2 sm:py-3 dark:bg-primaryBgLight  ">
-      <button className="text-orange text-3xl " onClick={handleFormat}>
+    <section className="text-white group  dark:bg-primaryBgLight relative   flex flex-col  gap-3">
+      <button
+        className="button-primary  hide-element format-btn w-fit self-end  group-hover:show-element absolute right-0 top-0 z-10 "
+        onClick={handleFormat}
+      >
         Format
       </button>
-      <h1 className="text-3xl text-primaryBgDark dark:text-white">Hello</h1>
 
       <Editor
-        theme="vs-dark"
+        className="dark:bg-primaryBgLight border-2 border-primaryBgLight dark:border-none rounded-sm"
+        theme={isDarkMode ? "vs-dark" : "light"}
         height={"500px"}
         language="javascript"
         onMount={handleEditorDidMount}

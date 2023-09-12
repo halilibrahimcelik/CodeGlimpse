@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@monaco-editor/react": "^4.5.2",
+    "@reduxjs/toolkit": "^1.9.5",
     "@types/prettier": "^3.0.0",
+    "@types/react-redux": "^7.1.26",
     "axios": "^1.5.0",
     "esbuild-wasm": "0.8.27",
     "localforage": "^1.10.0",
@@ -20,6 +22,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
+    "react-redux": "^8.1.2",
     "react-spinners": "^0.13.8"
   },
   "devDependencies": {
