@@ -2,6 +2,10 @@ import { useState, useEffect, useRef } from "react";
 import Form from "./components/Form";
 
 import * as esbuild from "esbuild-wasm";
+import CodeEditor from "./components/CodeEditor";
+import DarkMode from "./components/DarkMode";
+import { useAppDispatch } from "./app/store";
+import { toggleDarkMode } from "./app/features/globalSlice";
 
 export type EsbuildService = esbuild.Service;
 export const html = `
@@ -29,6 +33,7 @@ function App() {
   const [input, setInput] = useState<string>("");
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const serviceRef = useRef<EsbuildService | null>(null);
+  const dispatch = useAppDispatch();
 
   const startService = async () => {
     const response = await esbuild.startService({
@@ -40,18 +45,16 @@ function App() {
 
   useEffect(() => {
     startService();
+    dispatch(toggleDarkMode());
   }, []);
 
   return (
-    <main
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        gap: "1rem",
-        margin: "0 auto",
-      }}
-    >
+    <main className="dark:bg-primaryBg bg-white ">
+      <DarkMode />
+      <CodeEditor
+        initialValue="const a=1"
+        onChange={(value) => setInput(value)}
+      />
       <Form
         setInput={setInput}
         input={input}
