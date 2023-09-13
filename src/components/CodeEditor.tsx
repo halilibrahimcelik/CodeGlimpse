@@ -73,7 +73,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
   return (
     <section className="text-white group overflow-hidden dark:bg-primaryBgLight relative   flex flex-col  gap-3">
       <button
-        className="button-primary  hide-element format-btn w-fit self-end  group-hover:show-element absolute right-0 top-0 z-10 "
+        className="button-primary  hide-element format-btn w-fit self-end  group-hover:show-element absolute right-0 top-20 z-10 "
         onClick={handleFormat}
       >
         Format
