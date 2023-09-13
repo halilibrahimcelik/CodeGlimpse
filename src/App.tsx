@@ -1,10 +1,8 @@
 import { useEffect } from "react";
-import Form from "./components/Form";
-import CodeEditor from "./components/CodeEditor";
 import DarkMode from "./components/DarkMode";
 import { useAppDispatch } from "./app/store";
 import { toggleDarkMode } from "./app/features/globalSlice";
-import PreviwCode from "./components/PreviwCode";
+import CodeCell from "./components/CodeCell";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -14,12 +12,10 @@ function App() {
   }, []);
 
   return (
-    <main className="dark:bg-primaryBg bg-white ">
+    <main className="dark:bg-primaryBg bg-white h-[100vh] ">
       <DarkMode />
-      <CodeEditor initialValue="const a=1" />
-      <Form />
-
-      <PreviwCode />
+      <CodeCell />
+      <CodeCell />
     </main>
   );
 }
