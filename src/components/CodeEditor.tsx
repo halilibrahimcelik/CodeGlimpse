@@ -37,7 +37,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue }) => {
     editor.getModel()?.updateOptions({
       tabSize: 1,
     });
-    console.log(language);
     monaco.editor.setModelLanguage(editor.getModel()!, language);
   };
   const handleFormat = async () => {
