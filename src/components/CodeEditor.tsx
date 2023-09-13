@@ -10,18 +10,20 @@ import htmlplugin from "prettier/plugins/html";
 import typescriptPlugin from "prettier/plugins/typescript";
 import cssPlugin from "prettier/plugins/postcss";
 import graphqlPlugin from "prettier/plugins/graphql";
+import { useAppDispatch } from "../app/store";
+import { setInput } from "../app/features/globalSlice";
 
 import { useSelector } from "react-redux";
 import { selectDarkMode } from "../app/features/globalSlice";
 
 interface CodeEditorProps {
   initialValue: string;
-  onChange: (value: string) => void;
 }
-const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
+const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue }) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const [language, setLanguage] = useState<string>("javascript");
   const isDarkMode = useSelector(selectDarkMode);
+  const dispatch = useAppDispatch();
 
   const handleEditorDidMount = (
     editor: editor.IStandaloneCodeEditor,
@@ -29,7 +31,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
   ) => {
     editorRef.current = editor;
     editor.onDidChangeModelContent(() => {
-      onChange(editor.getValue());
+      dispatch(setInput(editor.getValue()));
     });
 
     editor.getModel()?.updateOptions({
