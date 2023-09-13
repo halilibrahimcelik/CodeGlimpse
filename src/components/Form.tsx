@@ -19,17 +19,8 @@ const Form = () => {
   };
 
   return (
-    <form
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        width: "60%",
-        margin: "0 auto",
-        gap: "1rem",
-      }}
-      onSubmit={onSubmit}
-    >
-      <button type="submit" value={"Submit"}>
+    <form className="flex justify-center items-center mt-4" onSubmit={onSubmit}>
+      <button type="submit" className="button-primary w-fit" value={"Submit"}>
         Submit
       </button>
     </form>
