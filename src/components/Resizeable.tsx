@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ResizableBox, ResizableBoxProps } from "react-resizable";
 import { useEffect, useState } from "react";
 export interface ResizeableProps {
@@ -9,9 +10,16 @@ const Resizeable: React.FC<ResizeableProps> = ({ direction, children }) => {
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
   useEffect(() => {
+    let timer: any;
+
     const listener = () => {
-      setWidth(window.innerWidth);
-      setHeight(window.innerHeight);
+      if (timer) {
+        clearTimeout(timer);
+      }
+      timer = setTimeout(() => {
+        setWidth(window.innerWidth);
+        setHeight(window.innerHeight);
+      }, 100);
     };
     window.addEventListener("resize", listener);
     return () => {
