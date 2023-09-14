@@ -10,6 +10,10 @@ html {
 .react-resizable {
   width: 100%;
 }
+.resize-horizontal {
+  display: flex;
+  flex-direction: row;
+}
 .react-resizable-handle {
   display: block;
   background-color: #37414b;
@@ -28,6 +32,8 @@ html {
   width: 10px;
   min-width: 10px;
   height: 100%;
+  position: relative;
+  z-index: 1;
   cursor: col-resize;
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==");
 }

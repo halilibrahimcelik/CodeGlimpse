@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 import { selectDarkMode } from "../app/features/globalSlice";
 import PreviwCode from "./PreviwCode";
 import Container from "./Container";
+import Resizeable from "./Resizeable";
 
 interface CodeEditorProps {
   initialValue: string;
@@ -75,7 +76,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue }) => {
 
   return (
     <Container>
-      <div className="text-white w-full group overflow-hidden h-full dark:bg-primaryBgLight relative   flex flex-col  gap-3">
+      <div className="text-white w-full  group overflow-hidden h-full dark:bg-primaryBgLight relative   flex flex-col  gap-3">
         <button
           className="button-primary  hide-element format-btn w-fit self-end  group-hover:show-element absolute right-0 top-10 z-10 "
           onClick={handleFormat}
@@ -103,27 +104,33 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue }) => {
             <option value="html">Html</option>
           </select>
         </div>
-        <div className="flex flex-row h-full w-full">
-          <Editor
-            className="dark:bg-primaryBgLight border-2 border-primaryBgLight dark:border-none rounded-sm"
-            theme={isDarkMode ? "vs-dark" : "light"}
-            height={"100%"}
-            language={language}
-            onMount={handleEditorDidMount}
-            value={initialValue}
-            options={{
-              wordWrap: "on",
-              minimap: { enabled: false },
-              showUnused: false,
-              folding: false,
-              lineNumbersMinChars: 3,
-              fontSize: 16,
-              scrollBeyondLastLine: false,
-              fontFamily: "Consolas",
-              automaticLayout: true,
-            }}
-            loading={<GridLoader color="#36d7b7" margin={3} />}
+        <div className="flex flex-row h-full ">
+          <Resizeable
+            direction="horizontal"
+            children={
+              <Editor
+                className="dark:bg-primaryBgLight border-2 w-[calc(100%-10px)] border-primaryBgLight dark:border-none rounded-sm"
+                theme={isDarkMode ? "vs-dark" : "light"}
+                height={"100%"}
+                language={language}
+                onMount={handleEditorDidMount}
+                value={initialValue}
+                options={{
+                  wordWrap: "on",
+                  minimap: { enabled: false },
+                  showUnused: false,
+                  folding: false,
+                  lineNumbersMinChars: 3,
+                  fontSize: 16,
+                  scrollBeyondLastLine: false,
+                  fontFamily: "Consolas",
+                  automaticLayout: true,
+                }}
+                loading={<GridLoader color="#60a2d8" margin={3} />}
+              />
+            }
           />
+
           <PreviwCode />
         </div>
       </div>
