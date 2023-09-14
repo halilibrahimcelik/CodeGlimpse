@@ -15,7 +15,6 @@ function App() {
     <main className="dark:bg-primaryBg bg-white h-[100vh] ">
       <DarkMode />
       <CodeCell />
-      <CodeCell />
     </main>
   );
 }

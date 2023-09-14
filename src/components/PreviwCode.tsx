@@ -31,12 +31,15 @@ const PreviwCode: React.FC = () => {
     iframeRef.current?.contentWindow?.postMessage(code, "*");
   }, [code]);
   return (
-    <iframe
-      ref={iframeRef}
-      title="Code Preview"
-      sandbox="allow-scripts"
-      srcDoc={html}
-    />
+    <div className="iframe-preview relative  flex-grow h-full after:content-[''] after:opacity-0 after:bg-transparent after:absolute after:top-0 after:bottom-0 after:left-0 after:right-0">
+      <iframe
+        ref={iframeRef}
+        className="dark:bg-grayLight  bg-primaryBgLight w-full h-full"
+        title="Code Preview"
+        sandbox="allow-scripts"
+        srcDoc={html}
+      />
+    </div>
   );
 };
 
