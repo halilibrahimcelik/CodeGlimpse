@@ -7,6 +7,9 @@ html {
   font-family: "Montserrat", sans-serif;
   font-family: "Quicksand", sans-serif;
 }
+.react-resizable {
+  width: 100%;
+}
 .react-resizable-handle {
   display: block;
   background-color: #37414b;
