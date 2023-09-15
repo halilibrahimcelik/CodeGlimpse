@@ -17,7 +17,7 @@ const CodeCell = () => {
       const output = await bundle(input);
 
       dispatch(setCode(output));
-    }, 1500);
+    }, 1000);
 
     return () => {
       clearTimeout(timer);
