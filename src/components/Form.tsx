@@ -1,21 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 
-import { useSelector } from "react-redux";
-import { getSelectedInput, setCode } from "../app/features/globalSlice";
-import { useAppDispatch } from "../app/store";
-import bundle from "../bundler";
-
 const Form = () => {
-  const dispatch = useAppDispatch();
-  const input = useSelector(getSelectedInput);
-
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    const output = await bundle(input);
-
-    dispatch(setCode(output));
   };
 
   return (
