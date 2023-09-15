@@ -29,7 +29,7 @@ const Resizeable: React.FC<ResizeableProps> = ({ direction, children }) => {
     return () => {
       window.removeEventListener("resize", listener);
     };
-  }, []);
+  }, [innerWidth]);
 
   let resizableProps: ResizableBoxProps;
   if (direction === "horizontal") {

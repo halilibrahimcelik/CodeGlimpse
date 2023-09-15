@@ -28,7 +28,12 @@ const PreviwCode: React.FC = () => {
   const code = useSelector(getSelectedCode);
   useEffect(() => {
     if (iframeRef.current) iframeRef.current.srcdoc = html;
-    iframeRef.current?.contentWindow?.postMessage(code, "*");
+    const timer = setTimeout(() => {
+      iframeRef.current?.contentWindow?.postMessage(code, "*");
+    }, 100);
+    return () => {
+      clearTimeout(timer);
+    };
   }, [code]);
   return (
     <div className="iframe-preview relative  flex-grow h-full after:content-[''] after:opacity-0 after:bg-transparent after:absolute after:top-0 after:bottom-0 after:left-0 after:right-0">
