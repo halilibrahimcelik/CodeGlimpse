@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Editor, { Monaco } from "@monaco-editor/react";
 import { editor } from "monaco-editor";
 import { useRef } from "react";
@@ -25,6 +25,7 @@ interface CodeEditorProps {
 const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue }) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const [language, setLanguage] = useState<string>("javascript");
+  const [code, setCode] = useState<string>("");
   const isDarkMode = useSelector(selectDarkMode);
   const dispatch = useAppDispatch();
 
@@ -33,8 +34,8 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue }) => {
     monaco: Monaco
   ) => {
     editorRef.current = editor;
-    editor.onDidChangeModelContent(() => {
-      dispatch(setInput(editor.getValue()));
+    editor.onDidChangeModelContent(async () => {
+      setCode(editor.getValue());
     });
 
     editor.getModel()?.updateOptions({
@@ -72,6 +73,19 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue }) => {
     }
   };
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      dispatch(setInput(code));
+    }, 1000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [code, dispatch]);
+  const handleLangueageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLanguage(e.target.value);
+    localStorage.getItem("language")! && localStorage.removeItem("language");
+    localStorage.setItem("language", e.target.value);
+  };
   return (
     <Container>
       <div className="text-white w-full  group overflow-hidden h-full dark:bg-primaryBgLight relative   flex flex-col  gap-3">
@@ -91,7 +105,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue }) => {
           <select
             id="languages"
             value={language}
-            onChange={(e) => setLanguage(e.target.value)}
+            onChange={handleLangueageChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           >
             <option defaultValue="javascript">Choose a language</option>

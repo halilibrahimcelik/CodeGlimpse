@@ -9,6 +9,7 @@ function App() {
 
   useEffect(() => {
     dispatch(toggleDarkMode());
+    localStorage.setItem("language", "javascript");
   }, []);
 
   return (

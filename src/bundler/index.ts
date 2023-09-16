@@ -3,6 +3,8 @@ import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
 import { fetchPlugin } from "./plugins/fetch-plugin";
 
 let service: esbuild.Service;
+const languageSelected = localStorage.getItem("language");
+console.log(languageSelected);
 const env = ["process", "env", "NODE_ENV"].join(".");
 const bundle = async (rawCode: string) => {
   if (!service) {
@@ -13,7 +15,7 @@ const bundle = async (rawCode: string) => {
   }
 
   const result = await service.build({
-    entryPoints: ["index.js"],
+    entryPoints: languageSelected === "html" ? ["index.html"] : ["index.js"],
     bundle: true,
     write: false,
     plugins: [unpkgPathPlugin(), fetchPlugin(rawCode)],
@@ -22,7 +24,6 @@ const bundle = async (rawCode: string) => {
       global: "window",
     },
   });
-  console.log(result.outputFiles[0].text);
   return result.outputFiles[0].text;
 };
 export default bundle;

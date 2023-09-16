@@ -38,7 +38,7 @@ const PreviwCode: React.FC<Props> = ({ language }) => {
       </script>
     </body>
     </html>
-  `;
+    `;
   useEffect(() => {
     if (iframeRef.current) iframeRef.current.srcdoc = html;
     const timer = setTimeout(() => {
