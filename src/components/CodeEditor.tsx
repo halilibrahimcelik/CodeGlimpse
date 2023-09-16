@@ -46,8 +46,6 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue }) => {
     //unformated code
     const unformated = editorRef?.current?.getValue() as string;
 
-    const currentLanguage = language;
-    console.log(currentLanguage);
     // Set the language for the current editor model
 
     try {
@@ -131,7 +129,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue }) => {
             }
           />
 
-          <PreviwCode />
+          <PreviwCode language={language} />
         </div>
       </div>
     </Container>

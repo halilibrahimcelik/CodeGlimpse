@@ -22,6 +22,7 @@ const bundle = async (rawCode: string) => {
       global: "window",
     },
   });
+  console.log(result.outputFiles[0].text);
   return result.outputFiles[0].text;
 };
 export default bundle;

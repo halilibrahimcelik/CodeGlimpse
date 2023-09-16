@@ -1,40 +1,53 @@
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { getSelectedCode } from "../app/features/globalSlice";
+import { getSelectedCode, getSelectedInput } from "../app/features/globalSlice";
 
-const html = `
-<html>
-  <head></head>
-  <body>
-    <div id="root"></div>
-    <script>
-     window.addEventListener("message", (event) => {
+type Props = {
+  language: string;
+};
 
-      try {
-        eval(event.data);
-      } catch (err) {
-        const root = document.querySelector("#root");
-        root.innerHTML = '<div style="color: red;text-align:center;"><h4>Runtime Error</h4>' + err + '</div>';
-     console.error(err);
-      }
-
-     },false)
-    </script>
-  </body>
-  </html>
-`;
-const PreviwCode: React.FC = () => {
+const PreviwCode: React.FC<Props> = ({ language }) => {
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const inputCode = useSelector(getSelectedInput);
   const code = useSelector(getSelectedCode);
+  const html = `
+  <html>
+    <head></head>
+    <body>
+      <div id="root"></div>
+      ${language === "html" ? inputCode : ""}
+      <script>
+      const handleError=(err)=>{
+        const root = document.querySelector("#root");
+        root.innerHTML = '<div style="color: red;text-align:center;"><h4 >Runtime Error</h4>' + err + '</div>';
+    
+      };
+  
+       window.addEventListener("message", (event) => {
+  
+        try {
+          console.log(event.data)
+          eval(event.data);
+   
+        } catch (err) {
+        ${language === "html" ? "" : "handleError(err)"}  ;
+  
+        }
+  
+       },false)
+      </script>
+    </body>
+    </html>
+  `;
   useEffect(() => {
     if (iframeRef.current) iframeRef.current.srcdoc = html;
     const timer = setTimeout(() => {
       iframeRef.current?.contentWindow?.postMessage(code, "*");
-    }, 100);
+    }, 1000);
     return () => {
       clearTimeout(timer);
     };
-  }, [code]);
+  }, [code, html]);
   return (
     <div className="iframe-preview relative  flex-grow h-full after:content-[''] after:opacity-0 after:bg-transparent after:absolute after:top-0 after:bottom-0 after:left-0 after:right-0">
       <iframe
