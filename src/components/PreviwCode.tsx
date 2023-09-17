@@ -25,10 +25,16 @@ const PreviwCode: React.FC<Props> = ({ language }) => {
       <script>
       const handleError=(err)=>{
         const root = document.querySelector("#root");
-        root.innerHTML = '<div style="color: red;text-align:center;"><h4 >Runtime Error</h4>' + err + '</div>';
-    
+        root.innerHTML = '<div style="color: red;text-align:center;"><h4  class="text-3xl">Runtime Error</h4>' +  '<p class="text-black texl-2xl">' + err + '</p>' + '</div>';
+        console.log(err)
       };
   
+      window.addEventListener("error", (event) => {
+        event.preventDefault();
+handleError(event.error);
+      })
+
+
        window.addEventListener("message", (event) => {
   
         try {
