@@ -12,17 +12,30 @@ const bundle = async (rawCode: string) => {
     });
   }
   const languageSelected = localStorage.getItem("language");
-
-  const result = await service.build({
-    entryPoints: languageSelected === "html" ? ["index.html"] : ["index.js"],
-    bundle: true,
-    write: false,
-    plugins: [unpkgPathPlugin(), fetchPlugin(rawCode)],
-    define: {
-      [env]: '"production"',
-      global: "window",
-    },
-  });
-  return result.outputFiles[0].text;
+  try {
+    const result = await service.build({
+      entryPoints: languageSelected === "html" ? ["index.html"] : ["index.js"],
+      bundle: true,
+      write: false,
+      plugins: [unpkgPathPlugin(), fetchPlugin(rawCode)],
+      define: {
+        [env]: '"production"',
+        global: "window",
+      },
+    });
+    return {
+      code: result.outputFiles[0].text,
+      error: null,
+    };
+  } catch (err) {
+    if (err instanceof Error) {
+      return {
+        code: "",
+        error: err.message,
+      };
+    } else {
+      throw err;
+    }
+  }
 };
 export default bundle;
