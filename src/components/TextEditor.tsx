@@ -36,9 +36,12 @@ const TextEditor = () => {
   }
   return (
     <Container>
-      <div onClick={() => setEdit(true)}>
+      <div
+        className="max-h-[400px] overflow-auto"
+        onClick={() => setEdit(true)}
+      >
         <MDEditor.Markdown
-          className="cursor-pointer preview-editor   border-2 rounded-md p-2.5   dark:border-gray-600 dark:text-white dark:bg-primaryBgLight"
+          className="cursor-pointer preview-editor list-disc    border-2 rounded-md p-2.5   dark:border-gray-600 dark:text-white dark:bg-primaryBgLight"
           source={value}
           style={{ whiteSpace: "pre-wrap" }}
         />

@@ -14,14 +14,16 @@ html {
   display: flex;
   flex-direction: row;
 }
-.react-resizable-handle {
+.react-resizable-handle,
+.w-md-editor-bar {
   display: block;
   background-color: #37414b;
   background-repeat: no-repeat;
   background-position: 50%;
 }
 
-.react-resizable-handle-s {
+.react-resizable-handle-s,
+.w-md-editor-bar {
   height: 10px;
   width: 100%;
   cursor: row-resize;
@@ -40,4 +42,69 @@ html {
 .dark .preview-text-editor {
   background-color: transparent;
   color: white;
+}
+.preview-editor ul,
+.w-md-editor-preview ul {
+  list-style-type: disc;
+}
+.w-md-editor ul {
+  line-height: 1;
+}
+.preview-editor ol,
+.w-md-editor-preview ol {
+  list-style-type: decimal;
+}
+.text-editor em {
+  font-style: italic;
+}
+
+.text-editor .wmde-markdown hr {
+  border-top: 1px solid #dee5ed;
+}
+
+.text-editor .wmde-markdown ol {
+  list-style: decimal;
+}
+
+.text-editor .w-md-editor-show-live {
+  /* Hide menu bar buttons to prevent accidental delete */
+  z-index: 20;
+}
+
+.text-editor .w-md-editor-toolbar {
+  background-color: #293642;
+  border-bottom: 1px solid gray;
+}
+
+.text-editor .w-md-editor-toolbar li button {
+  color: #d4d4d4;
+}
+
+.dark .text-editor .w-md-editor-content {
+  background-color: #141b29;
+  color: #fff;
+}
+.dark .text-editor .w-md-editor-content .title {
+  color: #fff !important;
+}
+.dark .preview-editor .code-highlight .code-line {
+  color: #333;
+}
+.dark .w-md-editor-preview .code-highlight .code-line {
+  color: #333;
+}
+.dark .w-md-editor-text-pre .token.content {
+  color: #fff !important;
+}
+.w-md-editor-text-pre > code {
+  color: #111 !important;
+}
+.dark .w-md-editor-text-pre > code {
+  color: #fff !important;
+}
+.dark .w-md-editor-text-pre .punctuation {
+  color: #dee5ed !important;
+}
+.dark .token.comment {
+  color: #0cbd0c;
 }
