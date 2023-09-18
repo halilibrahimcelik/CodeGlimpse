@@ -93,7 +93,7 @@ html {
 .dark .w-md-editor-preview .code-highlight .code-line {
   color: #333;
 }
-.dark .w-md-editor-text-pre .token.content {
+.dark .w-md-editor-text-pre .token.content .wmde-markdown blockquote {
   color: #fff !important;
 }
 .w-md-editor-text-pre > code {
