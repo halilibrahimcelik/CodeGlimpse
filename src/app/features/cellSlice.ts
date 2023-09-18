@@ -22,7 +22,7 @@ enum Direction {
 export type cellType = "code" | "text";
 
 export interface Cell {
-  id: string;
+  id: string | null;
   direction: Direction.UP | Direction.DOWN;
   type: cellType;
   content: string;
@@ -62,18 +62,21 @@ const cellSlice = createSlice({
       }
     },
     insertCellBefore(state, action) {
+      const randomId = () => {
+        return Math.random().toString(36).substring(2, 5);
+      };
       const cell: Cell = {
-        id: action.payload.id,
+        id: randomId(),
         type: action.payload.type,
         content: "",
         direction: Direction.UP,
       };
-      state.data[cell.id] = cell;
+      cell.id ? (state.data[cell.id] = cell) : false; // => we add the new cell to the data object
       const index = state.order.findIndex((id) => id === action.payload.id);
       if (index < 0) {
-        state.order.unshift(cell.id);
+        cell.id && state.order.unshift(cell.id);
       } else {
-        state.order.splice(index, 0, cell.id);
+        cell.id && state.order.splice(index, 0, cell.id);
       }
     },
   },
