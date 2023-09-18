@@ -1,12 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { getSelectedCode, getSelectedInput } from "../app/features/globalSlice";
+import { Props } from "./PreviwCode";
 
-type Props = {
-  language: string;
-};
-
-const PreviwCode: React.FC<Props> = ({ language }) => {
+export const PreviwCode: React.FC<Props> = ({ language }) => {
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const inputCode = useSelector(getSelectedInput);
   const code = useSelector(getSelectedCode);
@@ -25,19 +22,21 @@ const PreviwCode: React.FC<Props> = ({ language }) => {
       ${language === "html" ? inputCode : ""}
       </div>
       <script>
-      const handleError=(err)=>{
+      const handleError = (err) => {
         const root = document.querySelector("#root");
-        root.innerHTML = '<div style="color: red;text-align:center;"><h4  class="text-3xl">Runtime Error</h4>' +  '<p class="text-black texl-2xl">' +
-        
-      ( ${error?.replace(/(\r\n|\n|\r)/gm, " ") === null}
-            ? err
-            :     '${error?.replace(/(\r\n|\n|\r)/gm, " ")}'
-            ) 
-        
-        + 
-        
-        '</p>' + '</div>';
-        console.log(err)
+        root.innerHTML =
+          '<div style="color: red;text-align:center;"><h4  class="text-3xl">Runtime Error</h4>' +
+          '<p class="text-black texl-2xl">' +
+          ('${error?.replace(
+            /(\r\n|\n|\r)/gm,
+            " "
+          )}' === undefined ? err : '${error?.replace(
+            /(\r\n|\n|\r)/gm,
+            " "
+          )}') +
+          "</p>" +
+          "</div>";
+        console.log(err);
       };
   
       window.addEventListener("error", (event) => {
@@ -85,5 +84,3 @@ handleError(event.error);
     </div>
   );
 };
-
-export default PreviwCode;
