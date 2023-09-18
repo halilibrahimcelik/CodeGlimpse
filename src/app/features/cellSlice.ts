@@ -68,10 +68,10 @@ const cellSlice = createSlice({
       const cell: Cell = {
         id: randomId(),
         type: action.payload.type,
-        content: "",
+        content: "dfsdfsdf",
         direction: Direction.UP,
       };
-      cell.id ? (state.data[cell.id] = cell) : false; // => we add the new cell to the data object
+      cell.id ? ((state.data[cell.id] = cell), console.log("123123")) : false; // => we add the new cell to the data object
       const index = state.order.findIndex((id) => id === action.payload.id);
       if (index < 0) {
         cell.id && state.order.unshift(cell.id);
@@ -101,14 +101,9 @@ const cellSlice = createSlice({
 
 export default cellSlice.reducer;
 
-export const {
-  updateCell,
-  deleteCell,
-  moveCell,
-
-  insertCellBefore,
-} = cellSlice.actions;
-export const getCells = (state: { cell: CellState }) => state.cell.data;
+export const { updateCell, deleteCell, moveCell, insertCellBefore } =
+  cellSlice.actions;
+export const getCells = (state: { cell: CellState }) => state.cell;
 export const getLoading = (state: { cell: CellState }) => state.cell.loading;
 export const getError = (state: { cell: CellState }) => state.cell.error;
 export const getOrder = (state: { cell: CellState }) => state.cell.order;
