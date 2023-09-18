@@ -2,10 +2,15 @@ import { useState, useEffect } from "react";
 
 import MDEditor from "@uiw/react-md-editor";
 import Container from "./Container";
+import { useAppDispatch } from "../app/store";
+import { getTextValue, setTextValue } from "../app/features/globalSlice";
+import { useSelector } from "react-redux";
 
 const TextEditor = () => {
-  const [value, setValue] = useState<string | undefined>("# Hello world!!!**");
   const [edit, setEdit] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const value = useSelector(getTextValue);
+
   useEffect(() => {
     const listener = (e: MouseEvent) => {
       const textEditor = document.querySelector(".text-editor")!;
@@ -29,7 +34,7 @@ const TextEditor = () => {
         <MDEditor
           className="cursor-pointer text-editor"
           value={value}
-          onChange={setValue}
+          onChange={(v) => dispatch(setTextValue(v))}
         />
       </Container>
     );

@@ -10,12 +10,14 @@ const initialState: GlobalState = {
   input: "",
   code: "",
   error: null,
+  textValue: "# Hello World",
 };
 interface GlobalState {
   darkMode: boolean;
   input: string;
   code: string;
   error: null | string;
+  textValue: string;
 }
 const globalSlice = createSlice({
   name: "global",
@@ -44,10 +46,13 @@ const globalSlice = createSlice({
     setError(state, action) {
       state.error = action.payload;
     },
+    setTextValue(state, action) {
+      state.textValue = action.payload;
+    },
   },
 });
 
-export const { toggleDarkMode, setInput, setCode, setError } =
+export const { toggleDarkMode, setInput, setCode, setError, setTextValue } =
   globalSlice.actions;
 export const selectDarkMode = (state: { global: GlobalState }) =>
   state.global.darkMode;
@@ -57,4 +62,6 @@ export const getSelectedCode = (state: { global: GlobalState }) =>
   state.global.code;
 export const getSelectedError = (state: { global: GlobalState }) =>
   state.global.error;
+export const getTextValue = (state: { global: GlobalState }) =>
+  state.global.textValue;
 export default globalSlice.reducer;
