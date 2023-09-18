@@ -47,16 +47,18 @@ const cellSlice = createSlice({
     deleteCell(state, action) {
       const { id } = action.payload;
       delete state.data[id];
+      state.order = state.order.filter((id) => id !== action.payload.id);
     },
     moveCell(state, action) {
       const { id: identity, direction } = action.payload;
       const index = state.order.findIndex((id) => id === identity);
+      if (index < 0 || index > state.order.length - 1) return;
       if (direction === Direction.UP) {
         state.order[index] = state.order[index - 1];
         state.order[index - 1] = identity;
       } else {
         state.order[index] = state.order[index + 1];
-        state.order[index + 1] = identity;
+        state.order[index + 1] = identity; //we swap the order of the cells in the order array
       }
     },
     insertCellBefore(state, action) {
