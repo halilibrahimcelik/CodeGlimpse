@@ -1,15 +1,18 @@
 // import Form from "./Form";
 import { useEffect } from "react";
-import { getSelectedInput, setCode } from "../app/features/globalSlice";
+import { setCode } from "../app/features/globalSlice";
 import CodeEditor from "./CodeEditor";
 import Container from "./Container";
 import Resizeable from "./Resizeable";
 import { useSelector } from "react-redux";
 import bundle from "../bundler";
 import { useAppDispatch } from "../app/store";
+import { Cell, CellState, getContent } from "../app/features/cellSlice";
 
-const CodeCell = () => {
-  const input = useSelector(getSelectedInput);
+const CodeCell = (props: Cell) => {
+  const input = useSelector((state) =>
+    getContent(state as { cell: CellState }, props?.id as string)
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -28,7 +31,7 @@ const CodeCell = () => {
     <Container>
       <Resizeable
         direction="vertical"
-        children={<CodeEditor initialValue="const a=1" />}
+        children={<CodeEditor {...props} initialValue={input} />}
       />
     </Container>
   );

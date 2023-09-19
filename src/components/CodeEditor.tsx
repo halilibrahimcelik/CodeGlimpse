@@ -11,18 +11,18 @@ import typescriptPlugin from "prettier/plugins/typescript";
 import cssPlugin from "prettier/plugins/postcss";
 import graphqlPlugin from "prettier/plugins/graphql";
 import { useAppDispatch } from "../app/store";
-import { setInput } from "../app/features/globalSlice";
 
 import { useSelector } from "react-redux";
 import { selectDarkMode } from "../app/features/globalSlice";
 import PreviwCode from "./PreviwCode";
 import Container from "./Container";
 import Resizeable from "./Resizeable";
+import { Cell, updateCell } from "../app/features/cellSlice";
 
-interface CodeEditorProps {
+interface CodeEditorProps extends Cell {
   initialValue: string;
 }
-const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue }) => {
+const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, id }) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const [language, setLanguage] = useState<string>("javascript");
   const [code, setCode] = useState<string>("");
@@ -75,12 +75,12 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue }) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      dispatch(setInput(code));
+      dispatch(updateCell({ id, content: code }));
     }, 1000);
     return () => {
       clearTimeout(timer);
     };
-  }, [code, dispatch]);
+  }, [code, dispatch, id]);
   const handleLangueageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLanguage(e.target.value);
     localStorage.getItem("language")! && localStorage.removeItem("language");

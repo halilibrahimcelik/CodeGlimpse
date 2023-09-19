@@ -5,8 +5,9 @@ import Container from "./Container";
 import { useAppDispatch } from "../app/store";
 import { getTextValue, setTextValue } from "../app/features/globalSlice";
 import { useSelector } from "react-redux";
+import { Cell, updateCell } from "../app/features/cellSlice";
 
-const TextEditor = () => {
+const TextEditor = ({ id }: Cell) => {
   const [edit, setEdit] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const value = useSelector(getTextValue);
@@ -20,12 +21,17 @@ const TextEditor = () => {
         setEdit(false);
       }
     };
+
+    const timer = setTimeout(() => {
+      dispatch(updateCell({ id: id, content: value }));
+    }, 1000);
     document.addEventListener("click", listener, { capture: true });
 
     return () => {
       document.removeEventListener("click", listener, { capture: true });
+      clearTimeout(timer);
     };
-  }, []);
+  }, [dispatch, id, value]);
 
   if (edit) {
     return (
