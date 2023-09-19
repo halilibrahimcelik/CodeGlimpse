@@ -10,7 +10,7 @@ const CellList = () => {
   const cells = order.map((id) => {
     return data[id];
   });
-  console.log(cells);
+
   return (
     <ul className="flex flex-col gap-10 py-10">
       {cells.map((cell) => (

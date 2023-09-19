@@ -10,9 +10,9 @@ const CellListItem = ({ cell }: Props) => {
   let child: JSX.Element;
 
   if (cell.type === "code") {
-    child = <CodeCell />;
+    child = <CodeCell {...cell} />;
   } else {
-    child = <TextEditor />;
+    child = <TextEditor {...cell} />;
   }
   return <>{child}</>;
 };

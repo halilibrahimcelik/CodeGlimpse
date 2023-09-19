@@ -6,7 +6,7 @@ const initialState: CellState = {
   order: [],
 };
 
-interface CellState {
+export interface CellState {
   data: {
     [key: string]: Cell;
   };
@@ -105,4 +105,6 @@ export const { updateCell, deleteCell, moveCell, insertCellBefore } =
 export const getData = (state: { cell: CellState }) => state.cell.data;
 export const getLoading = (state: { cell: CellState }) => state.cell.loading;
 export const getError = (state: { cell: CellState }) => state.cell.error;
+export const getContent = (state: { cell: CellState }, id: string) =>
+  state.cell.data[id]?.content;
 export const getOrder = (state: { cell: CellState }) => state.cell.order;

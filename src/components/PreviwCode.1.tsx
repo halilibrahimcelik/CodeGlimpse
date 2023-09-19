@@ -1,7 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { getSelectedCode, getSelectedInput } from "../app/features/globalSlice";
-import { Props } from "./PreviwCode";
+
+type Props = {
+  language: string;
+};
 
 export const PreviwCode: React.FC<Props> = ({ language }) => {
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
