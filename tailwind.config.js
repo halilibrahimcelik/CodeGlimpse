@@ -9,13 +9,7 @@ export const content = [
   "./src/**/*.{ts,tsx}",
 ];
 export const theme = {
-  container: {
-    center: true,
-    padding: "2rem",
-    screens: {
-      "2xl": "1400px",
-    },
-  },
+  container: {},
   extend: {
     keyframes: {
       "accordion-down": {

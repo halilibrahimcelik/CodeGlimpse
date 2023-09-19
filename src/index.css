@@ -70,7 +70,11 @@ html {
   /* Hide menu bar buttons to prevent accidental delete */
   z-index: 20;
 }
+.preview-editor-container button {
+  width: 100%;
 
+  text-align: unset;
+}
 .text-editor .w-md-editor-toolbar {
   background-color: #293642;
   border-bottom: 1px solid gray;
