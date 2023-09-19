@@ -4,7 +4,6 @@ import { useAppDispatch } from "./app/store";
 import { toggleDarkMode } from "./app/features/globalSlice";
 import CellList from "./components/CellList";
 import { insertCellBefore } from "./app/features/cellSlice";
-import { Button } from "@/components/UI/ui/button";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -30,7 +29,6 @@ function App() {
     <main className="dark:bg-primaryBg bg-white min-h-[110vh] ">
       <DarkMode />
       <CellList />
-      <Button>Click me</Button>
     </main>
   );
 }
