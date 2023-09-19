@@ -1,7 +1,8 @@
 import { Cell } from "../app/features/cellSlice";
 
 import CodeCell from "./CodeCell";
-import TextEditor from "./TextEditor";
+import TextEditor from "@/components/TextEditor";
+
 type Props = {
   cell: Cell;
 };
