@@ -7,13 +7,14 @@ type Props = {
 };
 
 const CellListItem = ({ cell }: Props) => {
-  console.log(cell);
+  let child: JSX.Element;
 
   if (cell.type === "code") {
-    return <CodeCell />;
+    child = <CodeCell />;
   } else {
-    return <TextEditor />;
+    child = <TextEditor />;
   }
+  return <>{child}</>;
 };
 
 export default CellListItem;

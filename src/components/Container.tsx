@@ -5,7 +5,7 @@ type Props = {
 };
 
 function Container({ children }: Props) {
-  return <section className="container mx-auto h-full">{children}</section>;
+  return <section className="container mx-auto h-full ">{children}</section>;
 }
 
 export default Container;

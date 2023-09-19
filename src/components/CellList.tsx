@@ -10,10 +10,16 @@ const CellList = () => {
   const cells = order.map((id) => {
     return data[id];
   });
-  const renderedCells = cells.map((cell) => {
-    return <CellListItem key={cell.id} cell={cell} />;
-  });
-  return renderedCells;
+  console.log(cells);
+  return (
+    <ul className="flex flex-col gap-10 py-10">
+      {cells.map((cell) => (
+        <li key={cell.id}>
+          <CellListItem key={cell.id} cell={cell} />
+        </li>
+      ))}
+    </ul>
+  );
 };
 
 export default CellList;

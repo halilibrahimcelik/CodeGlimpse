@@ -17,10 +17,16 @@ function App() {
         type: "code",
       })
     );
+    dispatch(
+      insertCellBefore({
+        id: null,
+        type: "text",
+      })
+    );
   }, [dispatch]);
 
   return (
-    <main className="dark:bg-primaryBg bg-white h-[100vh] ">
+    <main className="dark:bg-primaryBg bg-white min-h-[110vh] ">
       <DarkMode />
       <CellList />
     </main>
