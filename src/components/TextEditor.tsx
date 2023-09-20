@@ -12,18 +12,24 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/UI/ui/tooltip";
+import ActionBar from "./ActionBar";
 
 const TextEditor = ({ id }: Cell) => {
   const [edit, setEdit] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const value = useSelector(getTextValue);
-
+  const actionBar = document.querySelector(".actionBar")!;
   useEffect(() => {
     const listener = (e: MouseEvent) => {
       const textEditor = document.querySelector(".text-editor")!;
+
       if (textEditor?.contains(e.target as Node)) {
         setEdit(true);
+        console.log("asda");
       } else {
+        const isActionBar = actionBar?.contains(e.target as Node);
+        console.log(isActionBar);
+        if (isActionBar) return;
         setEdit(false);
       }
     };
@@ -37,8 +43,8 @@ const TextEditor = ({ id }: Cell) => {
       document.removeEventListener("click", listener, { capture: true });
       clearTimeout(timer);
     };
-  }, [dispatch, id, value]);
-
+  }, [dispatch, id, value, actionBar]);
+  console.log(edit, "edit");
   if (edit) {
     return (
       <Container>
@@ -54,9 +60,14 @@ const TextEditor = ({ id }: Cell) => {
   return (
     <Container>
       <div
-        className="max-h-[400px] overflow-auto flex preview-editor-container"
-        onClick={() => setEdit(true)}
+        className="max-h-[400px] overflow-auto group  flex preview-editor-container relative pt-10 border-2"
+        onClick={(e) => {
+          actionBar?.contains(e.target as Node)
+            ? setEdit(false)
+            : setEdit(true);
+        }}
       >
+        <ActionBar />
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>

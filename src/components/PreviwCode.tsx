@@ -11,7 +11,6 @@ const PreviwCode: React.FC<Props> = ({ language }) => {
   const inputCode = useSelector(getSelectedInput);
   const code = useSelector(getSelectedCode);
   const error = useSelector(getSelectedCode);
-  console.log(error);
   const html = `
   <html>
     <head>
