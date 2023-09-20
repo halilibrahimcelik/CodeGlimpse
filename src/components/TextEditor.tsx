@@ -60,7 +60,7 @@ const TextEditor = ({ id }: Cell) => {
   return (
     <Container>
       <div
-        className="max-h-[400px] overflow-auto group  flex preview-editor-container relative pt-10 border-2"
+        className="max-h-[400px] overflow-auto group  flex preview-editor-container relative pt-12 "
         onClick={(e) => {
           actionBar?.contains(e.target as Node)
             ? setEdit(false)
@@ -72,7 +72,7 @@ const TextEditor = ({ id }: Cell) => {
           <Tooltip>
             <TooltipTrigger>
               <MDEditor.Markdown
-                className="cursor-pointer preview-editor list-disc    border-2 rounded-md p-2.5   dark:border-gray-600 dark:text-white dark:bg-primaryBgLight"
+                className="cursor-pointer preview-editor list-disc    border-[3px] rounded-md p-2.5   dark:border-gray-600 dark:text-white dark:bg-primaryBgLight"
                 source={value}
                 style={{ whiteSpace: "pre-wrap" }}
               />
