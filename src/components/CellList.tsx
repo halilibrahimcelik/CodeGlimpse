@@ -1,8 +1,7 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { getOrder, getData } from "../app/features/cellSlice";
 import CellListItem from "./CellListItem";
-
+import AlertComponent from "./Alert";
 const CellList = () => {
   const order = useSelector(getOrder);
   const data = useSelector(getData);
@@ -18,6 +17,8 @@ const CellList = () => {
           <CellListItem key={cell.id} cell={cell} />
         </li>
       ))}
+
+      <AlertComponent />
     </ul>
   );
 };

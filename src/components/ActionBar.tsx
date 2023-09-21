@@ -9,7 +9,6 @@ type Props = {
   id: string | null;
 };
 const ActionBar = ({ id }: Props) => {
-  console.log(id);
   const dispatch = useAppDispatch();
 
   const handleUp = () => {

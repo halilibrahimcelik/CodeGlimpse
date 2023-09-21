@@ -4,7 +4,10 @@ const initialState: CellState = {
   loading: false,
   error: null,
   order: [],
-  alertMessage: null,
+  alertMessage: {
+    message: null,
+    active: false,
+  },
 };
 
 export interface CellState {
@@ -14,7 +17,10 @@ export interface CellState {
   loading: boolean;
   error: null | string;
   order: string[];
-  alertMessage?: string | null;
+  alertMessage?: {
+    message: null | string;
+    active: boolean;
+  };
 }
 export enum Direction {
   UP = "up",
@@ -54,15 +60,20 @@ const cellSlice = createSlice({
       const { id: identity, direction } = action.payload;
       const index = state.order.findIndex((id) => id === identity);
       if (index <= 0 || index > state.order.length - 1) {
-        state.alertMessage = "You can't move the cell any further";
+        state.alertMessage = {
+          message: "You can't move the cell any further",
+          active: true,
+        };
         return;
       }
       if (direction === Direction.UP) {
-        state.order[index] = state.order[index - 1];
-        state.order[index - 1] = identity;
+        const prevIndex = index - 1;
+        state.order[index] = state.order[prevIndex];
+        state.order[prevIndex] = identity;
       } else {
-        state.order[index] = state.order[index + 1];
-        state.order[index + 1] = identity; //we swap the order of the cells in the order array
+        const nextIndex = index + 1;
+        state.order[index] = state.order[nextIndex];
+        state.order[nextIndex] = identity; //we swap the order of the cells in the order array
       }
     },
     insertCellBefore(state, action) {
@@ -83,8 +94,8 @@ const cellSlice = createSlice({
         cell.id && state.order.splice(index, 0, cell.id);
       }
     },
-    clerAlertMessage(state) {
-      state.alertMessage = null;
+    clearAlertMessage(state) {
+      state.alertMessage = { message: null, active: false };
     },
   },
   extraReducers: (builder) => {
@@ -110,7 +121,7 @@ export default cellSlice.reducer;
 
 export const {
   updateCell,
-  clerAlertMessage,
+  clearAlertMessage,
   deleteCell,
   moveCell,
   insertCellBefore,
@@ -123,3 +134,5 @@ export const getContent = (state: { cell: CellState }, id: string) =>
 export const getOrder = (state: { cell: CellState }) => state.cell.order;
 export const getAlertMessage = (state: { cell: CellState }) =>
   state.cell.alertMessage;
+export const isActiveMessage = (state: { cell: CellState }) =>
+  state.cell?.alertMessage?.active;
