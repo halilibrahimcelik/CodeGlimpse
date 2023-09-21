@@ -1,19 +1,67 @@
-import { AiOutlineWarning } from "react-icons/ai";
+import { AiOutlineWarning, AiOutlineClose } from "react-icons/ai";
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/UI/ui/alert";
-import React from "react";
+import { Alert, AlertDescription } from "@/components/UI/ui/alert";
+import React, { useEffect } from "react";
+import { useAppDispatch } from "@/app/store";
+import {
+  clearAlertMessage,
+  getAlertMessage,
+  isActiveMessage,
+} from "@/app/features/cellSlice";
+import { useSelector } from "react-redux";
+import { CSSTransition } from "react-transition-group";
 
 type Props = {
-  content: string;
-  icon: React.ReactElement;
+  icon?: React.ReactElement;
 };
-const AlertDiv = ({ icon = <AiOutlineWarning />, content }: Props) => {
+const AlertComponent = ({ icon = <AiOutlineWarning /> }: Props) => {
+  const nodeRef = React.useRef(null);
+
+  const dispatch = useAppDispatch();
+  const alertMessage = useSelector(getAlertMessage);
+  const isActive = useSelector(isActiveMessage);
+  console.log(isActive);
+  const handleRemove = () => {
+    dispatch(clearAlertMessage());
+  };
+
+  useEffect(() => {
+    if (isActive) {
+      const timer = setTimeout(() => {
+        // dispatch(clearAlertMessage());
+      }, 3000);
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [dispatch, isActive]);
   return (
-    <Alert>
-      <span>{icon}</span>
-      <AlertTitle>Heads up!</AlertTitle>
-      <AlertDescription>{content}</AlertDescription>
-    </Alert>
+    <>
+      <CSSTransition
+        nodeRef={nodeRef}
+        in={isActive}
+        timeout={300}
+        unmountOnExit
+        classNames={"alert-component"}
+      >
+        <Alert
+          ref={nodeRef}
+          className="max-w-md fixed flex items-center justify-between gap-6 z-50  before:content:[''] before:absolute before:h-full before:w-[2px]  before:left-14 before:bg-gray-300"
+        >
+          <span className="text-3xl">{icon}</span>
+
+          <AlertDescription className="text-base">
+            {alertMessage?.message}
+          </AlertDescription>
+          <span
+            className="text-3xl cursor-pointer  transition-opacity hover:opacity-60"
+            onClick={handleRemove}
+          >
+            <AiOutlineClose />
+          </span>
+        </Alert>
+      </CSSTransition>
+    </>
   );
 };
-export default AlertDiv;
+export default AlertComponent;

@@ -129,3 +129,26 @@ html {
 .wmde-markdown h1:hover .anchor {
   display: none;
 }
+.alert-component-enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.alert-component-enter-active {
+  opacity: 1;
+  transform: translateX(0%);
+  transition:
+    opacity,
+    transform 300ms;
+}
+
+.alert-component-exit {
+  opacity: 1;
+  transform: translateX(0%);
+}
+
+.alert-component-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: all 300ms;
+}
