@@ -1,6 +1,12 @@
-import { Direction, moveCell } from "@/app/features/cellSlice";
+import {
+  Direction,
+  clearAlertMessage,
+  deleteCell,
+  moveCell,
+  warningMessage,
+} from "@/app/features/cellSlice";
 import { useAppDispatch } from "@/app/store";
-import React from "react";
+import { useState } from "react";
 
 import { BiSolidUpArrowCircle, BiSolidDownArrowCircle } from "react-icons/bi";
 import { RiDeleteBin7Fill } from "react-icons/ri";
@@ -9,6 +15,7 @@ type Props = {
   id: string | null;
 };
 const ActionBar = ({ id }: Props) => {
+  const [confirm, setConfirm] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
   const handleUp = () => {
@@ -16,6 +23,15 @@ const ActionBar = ({ id }: Props) => {
   };
   const handleDown = () => {
     dispatch(moveCell({ id, direction: Direction.DOWN }));
+  };
+  const handleDelete = () => {
+    setConfirm(true);
+    dispatch(warningMessage());
+    if (confirm) {
+      dispatch(deleteCell({ id }));
+      dispatch(clearAlertMessage());
+      setConfirm(false);
+    }
   };
   return (
     <div className="flex actionBar justify-end gap-2 absolute z-50 top-1 right-0 opacity-0 translate-y-[-100px] group-hover:opacity-100 group-hover:translate-y-0 transition-all">
@@ -35,6 +51,7 @@ const ActionBar = ({ id }: Props) => {
       </span>
       <span
         title="Delete"
+        onClick={handleDelete}
         className="text-4xl dark:text-white  text-primaryBgLight  transition-opacity hover:opacity-75 cursor-pointer"
       >
         <RiDeleteBin7Fill />

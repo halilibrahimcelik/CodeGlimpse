@@ -51,8 +51,15 @@ const cellSlice = createSlice({
       const { id, content } = action.payload;
       state.data[id] = { ...state.data[id], content };
     },
+    warningMessage(state) {
+      state.alertMessage = {
+        message: "Are you sure you want to delete this cell?",
+        active: true,
+      };
+    },
     deleteCell(state, action) {
       const { id } = action.payload;
+
       delete state.data[id];
       state.order = state.order.filter((id) => id !== action.payload.id);
     },
@@ -132,6 +139,7 @@ export const {
   deleteCell,
   moveCell,
   insertCellBefore,
+  warningMessage,
 } = cellSlice.actions;
 export const getData = (state: { cell: CellState }) => state.cell.data;
 export const getLoading = (state: { cell: CellState }) => state.cell.loading;

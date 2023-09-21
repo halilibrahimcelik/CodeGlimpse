@@ -20,7 +20,7 @@ const AlertComponent = ({ icon = <AiOutlineWarning /> }: Props) => {
   const dispatch = useAppDispatch();
   const alertMessage = useSelector(getAlertMessage);
   const isActive = useSelector(isActiveMessage);
-
+  console.log(isActive);
   const handleRemove = () => {
     dispatch(clearAlertMessage());
   };
@@ -28,7 +28,7 @@ const AlertComponent = ({ icon = <AiOutlineWarning /> }: Props) => {
   useEffect(() => {
     if (isActive) {
       const timer = setTimeout(() => {
-        dispatch(clearAlertMessage());
+        // dispatch(clearAlertMessage());
       }, 3000);
       return () => {
         clearTimeout(timer);
