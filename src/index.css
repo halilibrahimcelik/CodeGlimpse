@@ -10,6 +10,19 @@ html {
 .react-resizable {
   width: 100%;
 }
+.dark .resize-vertical {
+  padding: 12px 12px 25px;
+  border: 3px solid rgb(75 85 99);
+  border-radius: 0.375rem;
+}
+
+.resize-vertical {
+  border: 2px solid #e5e7eb;
+  padding: 12px 12px 25px;
+
+  border-radius: 0.375rem;
+}
+
 .resize-horizontal {
   display: flex;
   flex-direction: row;
@@ -70,7 +83,11 @@ html {
   /* Hide menu bar buttons to prevent accidental delete */
   z-index: 20;
 }
+.preview-editor-container button {
+  width: 100%;
 
+  text-align: unset;
+}
 .text-editor .w-md-editor-toolbar {
   background-color: #293642;
   border-bottom: 1px solid gray;
@@ -107,4 +124,8 @@ html {
 }
 .dark .token.comment {
   color: #0cbd0c;
+}
+
+.wmde-markdown h1:hover .anchor {
+  display: none;
 }

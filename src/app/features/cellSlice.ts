@@ -4,6 +4,7 @@ const initialState: CellState = {
   loading: false,
   error: null,
   order: [],
+  alertMessage: null,
 };
 
 export interface CellState {
@@ -13,8 +14,9 @@ export interface CellState {
   loading: boolean;
   error: null | string;
   order: string[];
+  alertMessage?: string | null;
 }
-enum Direction {
+export enum Direction {
   UP = "up",
   DOWN = "down",
 }
@@ -51,7 +53,10 @@ const cellSlice = createSlice({
     moveCell(state, action) {
       const { id: identity, direction } = action.payload;
       const index = state.order.findIndex((id) => id === identity);
-      if (index < 0 || index > state.order.length - 1) return;
+      if (index <= 0 || index > state.order.length - 1) {
+        state.alertMessage = "You can't move the cell any further";
+        return;
+      }
       if (direction === Direction.UP) {
         state.order[index] = state.order[index - 1];
         state.order[index - 1] = identity;
@@ -78,6 +83,9 @@ const cellSlice = createSlice({
         cell.id && state.order.splice(index, 0, cell.id);
       }
     },
+    clerAlertMessage(state) {
+      state.alertMessage = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchCells.pending, (state) => {
@@ -100,11 +108,18 @@ const cellSlice = createSlice({
 
 export default cellSlice.reducer;
 
-export const { updateCell, deleteCell, moveCell, insertCellBefore } =
-  cellSlice.actions;
+export const {
+  updateCell,
+  clerAlertMessage,
+  deleteCell,
+  moveCell,
+  insertCellBefore,
+} = cellSlice.actions;
 export const getData = (state: { cell: CellState }) => state.cell.data;
 export const getLoading = (state: { cell: CellState }) => state.cell.loading;
 export const getError = (state: { cell: CellState }) => state.cell.error;
 export const getContent = (state: { cell: CellState }, id: string) =>
   state.cell.data[id]?.content;
 export const getOrder = (state: { cell: CellState }) => state.cell.order;
+export const getAlertMessage = (state: { cell: CellState }) =>
+  state.cell.alertMessage;

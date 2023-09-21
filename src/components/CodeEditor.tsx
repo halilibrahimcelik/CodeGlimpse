@@ -18,6 +18,7 @@ import PreviwCode from "./PreviwCode";
 import Container from "./Container";
 import Resizeable from "./Resizeable";
 import { Cell, updateCell } from "../app/features/cellSlice";
+import ActionBar from "./ActionBar";
 
 interface CodeEditorProps extends Cell {
   initialValue: string;
@@ -86,11 +87,13 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, id }) => {
     localStorage.getItem("language")! && localStorage.removeItem("language");
     localStorage.setItem("language", e.target.value);
   };
+
   return (
     <Container>
-      <div className="text-white w-full  group overflow-hidden h-full dark:bg-primaryBgLight relative   flex flex-col  gap-3">
+      <div className="text-white w-full pt-5 ounded-md  dark:border-gray-600 dark:text-white group overflow-hidden h-full dark:bg-primaryBgLight relative   flex flex-col  gap-3">
+        <ActionBar id={id} />
         <button
-          className="button-primary  hide-element format-btn w-fit self-end  group-hover:show-element absolute right-0 top-10 z-10 "
+          className="button-primary  hide-element format-btn w-fit self-end  group-hover:show-element absolute right-0 top-12 z-10 "
           onClick={handleFormat}
         >
           Format
