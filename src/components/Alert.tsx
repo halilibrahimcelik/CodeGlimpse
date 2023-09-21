@@ -1,7 +1,7 @@
 import { AiOutlineWarning, AiOutlineClose } from "react-icons/ai";
 
 import { Alert, AlertDescription } from "@/components/UI/ui/alert";
-import React from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch } from "@/app/store";
 import {
   clearAlertMessage,
@@ -21,11 +21,20 @@ const AlertComponent = ({ icon = <AiOutlineWarning /> }: Props) => {
   const alertMessage = useSelector(getAlertMessage);
   const isActive = useSelector(isActiveMessage);
 
-  console.log(alertMessage);
   const handleRemove = () => {
     dispatch(clearAlertMessage());
   };
-  console.log(isActive);
+
+  useEffect(() => {
+    if (isActive) {
+      const timer = setTimeout(() => {
+        dispatch(clearAlertMessage());
+      }, 3000);
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [dispatch, isActive]);
   return (
     <>
       <CSSTransition
