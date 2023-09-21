@@ -14,6 +14,9 @@ const ActionBar = ({ id }: Props) => {
   const handleUp = () => {
     dispatch(moveCell({ id, direction: Direction.UP }));
   };
+  const handleDown = () => {
+    dispatch(moveCell({ id, direction: Direction.DOWN }));
+  };
   return (
     <div className="flex actionBar justify-end gap-2 absolute z-50 top-1 right-0 opacity-0 translate-y-[-100px] group-hover:opacity-100 group-hover:translate-y-0 transition-all">
       <span
@@ -26,6 +29,7 @@ const ActionBar = ({ id }: Props) => {
       <span
         title="Down"
         className="text-4xl dark:text-white  text-primaryBgLight  transition-opacity hover:opacity-75 cursor-pointer"
+        onClick={handleDown}
       >
         <BiSolidDownArrowCircle />
       </span>

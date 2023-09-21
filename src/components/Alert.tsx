@@ -46,14 +46,17 @@ const AlertComponent = ({ icon = <AiOutlineWarning /> }: Props) => {
       >
         <Alert
           ref={nodeRef}
-          className="max-w-md fixed flex items-center justify-between gap-6  before:content:[''] before:absolute before:h-full before:w-[2px]  before:left-14 before:bg-gray-300"
+          className="max-w-md fixed flex items-center justify-between gap-6 z-50  before:content:[''] before:absolute before:h-full before:w-[2px]  before:left-14 before:bg-gray-300"
         >
           <span className="text-3xl">{icon}</span>
 
           <AlertDescription className="text-base">
             {alertMessage?.message}
           </AlertDescription>
-          <span className="text-3xl cursor-pointer" onClick={handleRemove}>
+          <span
+            className="text-3xl cursor-pointer  transition-opacity hover:opacity-60"
+            onClick={handleRemove}
+          >
             <AiOutlineClose />
           </span>
         </Alert>

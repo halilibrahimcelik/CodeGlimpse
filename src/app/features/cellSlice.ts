@@ -59,7 +59,14 @@ const cellSlice = createSlice({
     moveCell(state, action) {
       const { id: identity, direction } = action.payload;
       const index = state.order.findIndex((id) => id === identity);
-      if (index <= 0 || index > state.order.length - 1) {
+      if (index === 0 && direction === Direction.UP) {
+        state.alertMessage = {
+          message: "You can't move the cell any further",
+          active: true,
+        };
+        return;
+      }
+      if (index === state.order.length - 1 && direction === Direction.DOWN) {
         state.alertMessage = {
           message: "You can't move the cell any further",
           active: true,
