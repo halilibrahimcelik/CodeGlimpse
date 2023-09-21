@@ -25,10 +25,8 @@ const TextEditor = ({ id }: Cell) => {
 
       if (textEditor?.contains(e.target as Node)) {
         setEdit(true);
-        console.log("asda");
       } else {
         const isActionBar = actionBar?.contains(e.target as Node);
-        console.log(isActionBar);
         if (isActionBar) return;
         setEdit(false);
       }
@@ -44,7 +42,6 @@ const TextEditor = ({ id }: Cell) => {
       clearTimeout(timer);
     };
   }, [dispatch, id, value, actionBar]);
-  console.log(edit, "edit");
   if (edit) {
     return (
       <Container>
@@ -60,19 +57,19 @@ const TextEditor = ({ id }: Cell) => {
   return (
     <Container>
       <div
-        className="max-h-[400px] overflow-auto group  flex preview-editor-container relative pt-12 "
+        className=" overflow-auto group  flex preview-editor-container relative pt-12 "
         onClick={(e) => {
           actionBar?.contains(e.target as Node)
             ? setEdit(false)
             : setEdit(true);
         }}
       >
-        <ActionBar />
+        <ActionBar id={id} />
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
               <MDEditor.Markdown
-                className="cursor-pointer preview-editor list-disc    border-[3px] rounded-md p-2.5   dark:border-gray-600 dark:text-white dark:bg-primaryBgLight"
+                className="cursor-pointer h-[400px] preview-editor list-disc    border-[3px] rounded-md p-2.5   dark:border-gray-600 dark:text-white dark:bg-primaryBgLight"
                 source={value}
                 style={{ whiteSpace: "pre-wrap" }}
               />
