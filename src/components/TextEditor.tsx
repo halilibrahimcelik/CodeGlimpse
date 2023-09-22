@@ -18,7 +18,9 @@ const TextEditor = ({ id }: Cell) => {
   const [edit, setEdit] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const value = useSelector(getTextValue);
-  const actionBar = document.querySelector(".actionBar")!;
+  const actionBar = document.querySelector(
+    ".preview-editor-container .actionBar"
+  )!;
   useEffect(() => {
     const listener = (e: MouseEvent) => {
       const textEditor = document.querySelector(".text-editor")!;
@@ -27,6 +29,7 @@ const TextEditor = ({ id }: Cell) => {
         setEdit(true);
       } else {
         const isActionBar = actionBar?.contains(e.target as Node);
+        console.log(isActionBar);
         if (isActionBar) return;
         setEdit(false);
       }
@@ -64,7 +67,7 @@ const TextEditor = ({ id }: Cell) => {
             : setEdit(true);
         }}
       >
-        <ActionBar id={id} />
+        <ActionBar id={id} type="text" />
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>

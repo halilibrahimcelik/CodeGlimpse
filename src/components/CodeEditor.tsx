@@ -23,7 +23,7 @@ import ActionBar from "./ActionBar";
 interface CodeEditorProps extends Cell {
   initialValue: string;
 }
-const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, id }) => {
+const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, id, type }) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const [language, setLanguage] = useState<string>("javascript");
   const [code, setCode] = useState<string>("");
@@ -91,7 +91,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, id }) => {
   return (
     <Container>
       <div className="text-white w-full pt-5 ounded-md  dark:border-gray-600 dark:text-white group overflow-hidden h-full dark:bg-primaryBgLight relative   flex flex-col  gap-3">
-        <ActionBar id={id} />
+        <ActionBar id={id} type={type} />
         <button
           className="button-primary  hide-element format-btn w-fit self-end  group-hover:show-element absolute right-0 top-12 z-10 "
           onClick={handleFormat}

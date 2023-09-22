@@ -20,7 +20,6 @@ const AlertComponent = ({ icon = <AiOutlineWarning /> }: Props) => {
   const dispatch = useAppDispatch();
   const alertMessage = useSelector(getAlertMessage);
   const isActive = useSelector(isActiveMessage);
-  console.log(isActive);
   const handleRemove = () => {
     dispatch(clearAlertMessage());
   };
@@ -46,7 +45,7 @@ const AlertComponent = ({ icon = <AiOutlineWarning /> }: Props) => {
       >
         <Alert
           ref={nodeRef}
-          className="max-w-md fixed flex items-center justify-between gap-6 z-50  before:content:[''] before:absolute before:h-full before:w-[2px]  before:left-14 before:bg-gray-300"
+          className="max-w-md   fixed flex items-center  gap-6 z-50  before:content:[''] before:absolute before:h-full before:w-[2px]  before:left-14 before:bg-gray-300"
         >
           <span className="text-3xl">{icon}</span>
 
@@ -54,7 +53,7 @@ const AlertComponent = ({ icon = <AiOutlineWarning /> }: Props) => {
             {alertMessage?.message}
           </AlertDescription>
           <span
-            className="text-3xl cursor-pointer  transition-opacity hover:opacity-60"
+            className="text-xl cursor-pointer  absolute top-2 right-2 transition-opacity hover:opacity-60"
             onClick={handleRemove}
           >
             <AiOutlineClose />
