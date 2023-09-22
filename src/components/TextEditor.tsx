@@ -29,7 +29,6 @@ const TextEditor = ({ id }: Cell) => {
         setEdit(true);
       } else {
         const isActionBar = actionBar?.contains(e.target as Node);
-        console.log(isActionBar);
         if (isActionBar) return;
         setEdit(false);
       }

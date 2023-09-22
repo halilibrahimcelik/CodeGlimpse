@@ -27,8 +27,8 @@ const AlertComponent = ({ icon = <AiOutlineWarning /> }: Props) => {
   useEffect(() => {
     if (isActive) {
       const timer = setTimeout(() => {
-        // dispatch(clearAlertMessage());
-      }, 3000);
+        dispatch(clearAlertMessage());
+      }, 2500);
       return () => {
         clearTimeout(timer);
       };

@@ -102,10 +102,11 @@ const cellSlice = createSlice({
       };
       cell.id ? (state.data[cell.id] = cell) : false; // => we add the new cell to the data object
       const index = state.order.findIndex((id) => id === action.payload.id);
+
       if (index < 0) {
         cell.id && state.order.unshift(cell.id);
       } else {
-        cell.id && state.order.splice(index, 0, cell.id);
+        cell.id && state.order.splice(index + 1, 0, cell.id);
       }
     },
     clearAlertMessage(state) {
