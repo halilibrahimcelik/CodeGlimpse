@@ -19,7 +19,7 @@ html {
 .resize-vertical {
   border: 2px solid #e5e7eb;
   padding: 12px 12px 25px;
-
+  margin-top: 40px;
   border-radius: 0.375rem;
 }
 

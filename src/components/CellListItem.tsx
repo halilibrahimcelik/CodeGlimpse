@@ -11,9 +11,9 @@ const CellListItem = ({ cell }: Props) => {
   let child: JSX.Element;
 
   if (cell.type === "code") {
-    child = <CodeCell {...cell} />;
+    child = <CodeCell key={cell.id} {...cell} />;
   } else {
-    child = <TextEditor {...cell} />;
+    child = <TextEditor key={cell.id} {...cell} />;
   }
   return <>{child}</>;
 };

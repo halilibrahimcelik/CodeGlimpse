@@ -40,17 +40,17 @@ export const plugins = [
   function ({ addUtilities }) {
     const newUtilities = {
       ".button-primary": {
-        color: "#fff",
-        backgroundColor: "#E45826",
-        padding: "5px 10px",
-        borderRadius: ".20rem",
-        border: "1px solid #E45826",
-        fontSize: "1rem",
-        fontWeight: "500",
+        color: "#fff !important",
+        backgroundColor: "#E45826 !important",
+        padding: "5px 10px !important",
+        borderRadius: ".20rem !important",
+        border: "1px solid #E45826 !important",
+        fontSize: "1.4rem !important",
+        fontWeight: "400 !important",
         transition: "all .3s ease-in",
         "&:hover": {
-          backgroundColor: "#bd3200",
-          color: "#fff",
+          backgroundColor: "#bd3200 !important",
+          color: "#fff !important",
         },
       },
       ".hide-element": {
