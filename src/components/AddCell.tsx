@@ -26,20 +26,28 @@ const AddCell = ({ id }: Props) => {
     );
   };
   return (
-    <div className="flex justify-center gap-4 w-5/6 mx-auto before:z-0 relative before:absolute before:content-[''] before:w-full before:h-[1px] before:top-[50%] dark:before:bg-gray-500 before:bg-primaryBgDark">
+    <div className="flex   justify-center gap-4 w-5/6 mx-auto before:z-0 relative before:absolute before:content-[''] before:w-full before:h-[1px] before:top-[50%] dark:before:bg-gray-500 before:bg-primaryBgDark">
       <Button
         onClick={handleAddText}
-        className="button-primary flex gap-1 relative z-10"
+        className="button-primary group flex gap-1 relative z-10"
       >
         {" "}
-        <RiAddCircleLine /> <span>Text</span>
+        <span className="group-hover:scale-110 scale-90 duration-300 transition-transform">
+          {" "}
+          <RiAddCircleLine />{" "}
+        </span>
+        <span>Text</span>
       </Button>
       <Button
         onClick={handleAddCode}
-        className="button-primary flex gap-1 relative z-10"
+        className="button-primary group flex gap-1 relative z-10"
       >
         {" "}
-        <RiAddCircleLine /> <span>Code</span>{" "}
+        <span className="group-hover:scale-110 scale-90 duration-300 transition-transform">
+          {" "}
+          <RiAddCircleLine />
+        </span>{" "}
+        <span>Code</span>{" "}
       </Button>
     </div>
   );
