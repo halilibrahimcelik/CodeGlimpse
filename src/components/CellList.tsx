@@ -37,7 +37,7 @@ const CellList = () => {
             className="flex flex-col gap-10"
             transition={{ duration: 0.5, staggerChildren: 0.1 }}
           >
-            <CellListItem cell={cell} />
+            <CellListItem key={cell.id} cell={cell} />
             <AddCell id={cell.id} />
           </motion.li>
         ))}

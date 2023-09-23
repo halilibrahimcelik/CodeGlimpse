@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
-
 import MDEditor from "@uiw/react-md-editor";
 import Container from "./Container";
 import { useAppDispatch } from "../app/store";
-import { getTextValue, setTextValue } from "../app/features/globalSlice";
-import { useSelector } from "react-redux";
 import { Cell, updateCell } from "../app/features/cellSlice";
 import {
   Tooltip,
@@ -16,8 +13,9 @@ import ActionBar from "./ActionBar";
 
 const TextEditor = ({ id }: Cell) => {
   const [edit, setEdit] = useState<boolean>(false);
+  const [value, setValue] = useState<string>("");
   const dispatch = useAppDispatch();
-  const value = useSelector(getTextValue);
+
   const actionBar = document.querySelector(
     ".preview-editor-container .actionBar"
   )!;
@@ -25,7 +23,10 @@ const TextEditor = ({ id }: Cell) => {
     const listener = (e: MouseEvent) => {
       const textEditor = document.querySelector(".text-editor")!;
 
-      if (textEditor?.contains(e.target as Node)) {
+      if (
+        textEditor?.contains(e.target as Node) &&
+        textEditor.getAttribute("data-id") === id
+      ) {
         setEdit(true);
       } else {
         const isActionBar = actionBar?.contains(e.target as Node);
@@ -50,8 +51,9 @@ const TextEditor = ({ id }: Cell) => {
         {" "}
         <MDEditor
           className="cursor-pointer text-editor"
+          data-id={id}
           value={value}
-          onChange={(v) => dispatch(setTextValue(v))}
+          onChange={(v) => setValue(v || "")}
         />
       </Container>
     );
