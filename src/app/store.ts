@@ -4,6 +4,7 @@ import globalSlice from "./features/globalSlice";
 import thunk from "redux-thunk";
 import cellSlice from "./features/cellSlice";
 import { useSelector } from "react-redux";
+import bundleSlice from "./features/bundleSlice";
 export type RootState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
@@ -14,6 +15,7 @@ export const store = configureStore({
   reducer: {
     global: globalSlice,
     cell: cellSlice,
+    bundle: bundleSlice,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });

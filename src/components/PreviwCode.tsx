@@ -1,16 +1,27 @@
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { getSelectedCode, getSelectedInput } from "../app/features/globalSlice";
+import { getSelectedInput } from "../app/features/globalSlice";
+import {
+  selectBundleById,
+  selectBundleCode,
+  selectBundleError,
+  selectBundleLoading,
+} from "@/app/features/bundleSlice";
+import { GridLoader } from "react-spinners";
 
 type Props = {
   language: string;
+  id: string | null;
 };
 
-const PreviwCode: React.FC<Props> = ({ language }) => {
+const PreviwCode: React.FC<Props> = ({ language, id }) => {
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const inputCode = useSelector(getSelectedInput);
-  const code = useSelector(getSelectedCode);
-  const error = useSelector(getSelectedCode);
+  const code = useSelector(selectBundleCode(id as string));
+  const error = useSelector(selectBundleError(id as string));
+  const loading = useSelector(selectBundleLoading(id as string));
+  const bundle = useSelector(selectBundleById(id as string));
+
   const html = `
   <html>
     <head>
@@ -22,16 +33,23 @@ const PreviwCode: React.FC<Props> = ({ language }) => {
       <div id="root"></div>
       <div class="container mx-auto">
       ${language === "html" ? inputCode : ""}
+
+      ${
+        error
+          ? ` 
+         <div style="color: red;text-align:center;"><h4  class="text-3xl">Runtime Error</h4>  <p class="text-black texl-2xl">    
+   ${error.replace(/"/g, "'").trim()}</p>  </div>
+
+      `
+          : ""
+      }
       </div>
       <script>
       const handleError=(err)=>{
         const root = document.querySelector("#root");
         root.innerHTML = '<div style="color: red;text-align:center;"><h4  class="text-3xl">Runtime Error</h4>' +  '<p class="text-black texl-2xl">' +
         
-      ( ${error?.replace(/(\r\n|\n|\r)/gm, " ") === null}
-            ? err
-            :     '${error?.replace(/(\r\n|\n|\r)/gm, " ")}'
-            ) 
+  err
         
         + 
         
@@ -71,18 +89,27 @@ handleError(event.error);
       clearTimeout(timer);
     };
   }, [code, html]);
-  return (
-    <div className="iframe-preview relative  flex-grow h-full after:content-[''] after:opacity-0 after:bg-transparent after:absolute after:top-0 after:bottom-0 after:left-0 after:right-[20px]">
-      <iframe
-        ref={iframeRef}
-        className="dark:bg-grayLight  bg-primaryBgLight w-full h-full"
-        title="Code Preview"
-        sandbox="allow-scripts"
-        srcDoc={html}
-      />
-      {error && <div className="error-msg">{error} </div>}
-    </div>
-  );
+
+  if (loading || !bundle) {
+    return (
+      <div className="flex justify-center items-center w-full">
+        <GridLoader color="#60a2d8" margin={3} />
+      </div>
+    );
+  } else {
+    return (
+      <div className="iframe-preview relative  flex-grow h-full after:content-[''] after:opacity-0 after:bg-transparent after:absolute after:top-0 after:bottom-0 after:left-0 after:right-[20px]">
+        <iframe
+          ref={iframeRef}
+          className="dark:bg-grayLight  bg-primaryBgLight w-full h-full"
+          title="Code Preview"
+          sandbox="allow-scripts"
+          srcDoc={html}
+        />
+        {error && <div className="error-msg">{error} </div>}
+      </div>
+    );
+  }
 };
 
 export default PreviwCode;
