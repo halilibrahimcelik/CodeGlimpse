@@ -49,7 +49,7 @@ const cellSlice = createSlice({
   reducers: {
     updateCell(state, action) {
       const { id, content } = action.payload;
-      console.log(id);
+
       state.data[id] = { ...state.data[id], content };
     },
     warningMessage(state) {
