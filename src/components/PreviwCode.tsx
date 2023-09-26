@@ -21,7 +21,6 @@ const PreviwCode: React.FC<Props> = ({ language, id }) => {
   const error = useSelector(selectBundleError(id as string));
   const loading = useSelector(selectBundleLoading(id as string));
   const bundle = useSelector(selectBundleById(id as string));
-  console.log(bundle, "bundle");
 
   const html = `
   <html>
