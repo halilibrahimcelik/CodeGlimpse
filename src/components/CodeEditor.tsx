@@ -146,7 +146,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, id, type }) => {
             }
           />
 
-          <PreviwCode language={language} />
+          <PreviwCode language={language} id={id} />
         </div>
       </div>
     </Container>

@@ -1,8 +1,6 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 const initialState: CellState = {
   data: {},
-  loading: false,
-  error: null,
   order: [],
   alertMessage: {
     message: null,
@@ -14,8 +12,6 @@ export interface CellState {
   data: {
     [key: string]: Cell;
   };
-  loading: boolean;
-  error: null | string;
   order: string[];
   alertMessage?: {
     message: null | string;
@@ -34,14 +30,6 @@ export interface Cell {
   type: cellType;
   content: string;
 }
-
-export const fetchCells = createAsyncThunk("cells/fetchCells", async () => {
-  try {
-    return [];
-  } catch (err) {
-    console.log(err);
-  }
-});
 
 const cellSlice = createSlice({
   name: "cell",
@@ -114,23 +102,6 @@ const cellSlice = createSlice({
       state.alertMessage = { message: null, active: false };
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(fetchCells.pending, (state) => {
-      state.loading = true;
-      state.error = null;
-      state.data = {};
-    });
-    builder.addCase(fetchCells.fulfilled, (state) => {
-      state.loading = false;
-      state.error = null;
-      state.data = {};
-    });
-    builder.addCase(fetchCells.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error.message as string;
-      state.data = {};
-    });
-  },
 });
 
 export default cellSlice.reducer;
@@ -144,8 +115,7 @@ export const {
   warningMessage,
 } = cellSlice.actions;
 export const getData = (state: { cell: CellState }) => state.cell.data;
-export const getLoading = (state: { cell: CellState }) => state.cell.loading;
-export const getError = (state: { cell: CellState }) => state.cell.error;
+
 export const getContent = (state: { cell: CellState }, id: string) =>
   state.cell.data[id]?.content;
 export const getOrder = (state: { cell: CellState }) => state.cell.order;
