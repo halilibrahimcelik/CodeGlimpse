@@ -16,13 +16,11 @@ const TextEditor = ({ id }: Cell) => {
   const [value, setValue] = useState<string>("");
   const dispatch = useAppDispatch();
 
-  const actionBar = document.querySelector(
-    ".preview-editor-container .actionBar"
-  )!;
+  const actionBar = document.querySelector(".actionBar" + id)!;
+
   useEffect(() => {
     const listener = (e: MouseEvent) => {
       const textEditor = document.querySelector(".text-editor")!;
-
       if (
         textEditor?.contains(e.target as Node) &&
         textEditor.getAttribute("data-id") === id
@@ -50,7 +48,7 @@ const TextEditor = ({ id }: Cell) => {
       <Container>
         {" "}
         <MDEditor
-          className="cursor-pointer text-editor"
+          className="cursor-pointer text-editor mt-10  bg-gray-600"
           data-id={id}
           value={value}
           onChange={(v) => setValue(v || "")}

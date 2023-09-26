@@ -34,13 +34,23 @@ html {
   background-repeat: no-repeat;
   background-position: 50%;
 }
-
+.wmde-markdown {
+  background-color: transparent;
+  color: #fff;
+}
 .react-resizable-handle-s,
 .w-md-editor-bar {
   height: 10px;
   width: 100%;
   cursor: row-resize;
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=");
+}
+.w-md-editor-text-pre .token.code.keyword {
+  color: #fff !important;
+  font-weight: 500;
+}
+.wmde-markdown blockquote {
+  color: #d4cbcb !important;
 }
 
 .react-resizable-handle-e {
