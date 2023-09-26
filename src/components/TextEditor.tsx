@@ -21,7 +21,6 @@ const TextEditor = ({ id }: Cell) => {
   useEffect(() => {
     const listener = (e: MouseEvent) => {
       const textEditor = document.querySelector(".text-editor")!;
-      console.log(actionBar);
       if (
         textEditor?.contains(e.target as Node) &&
         textEditor.getAttribute("data-id") === id
@@ -29,7 +28,6 @@ const TextEditor = ({ id }: Cell) => {
         setEdit(true);
       } else {
         const isActionBar = actionBar?.contains(e.target as Node);
-        console.log(isActionBar);
         if (isActionBar) return;
         setEdit(false);
       }

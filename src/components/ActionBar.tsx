@@ -39,7 +39,6 @@ const ActionBar = ({ id, type }: Props) => {
       className={`flex ${
         type === "text" ? "actionBar" + `${id}` : ""
       } justify-end gap-2 absolute z-[100] top-1 right-0 opacity-0 translate-y-[-100px] group-hover:opacity-100 group-hover:translate-y-0 transition-all`}
-      data-id={id}
     >
       <span
         onClick={handleUp}
