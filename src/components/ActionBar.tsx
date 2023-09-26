@@ -1,3 +1,4 @@
+import { deleteBundle } from "@/app/features/bundleSlice";
 import {
   Direction,
   clearAlertMessage,
@@ -30,6 +31,7 @@ const ActionBar = ({ id, type }: Props) => {
     dispatch(warningMessage());
     if (confirm) {
       dispatch(deleteCell({ id }));
+      dispatch(deleteBundle({ id }));
       dispatch(clearAlertMessage());
       setConfirm(false);
     }

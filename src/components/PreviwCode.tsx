@@ -2,9 +2,12 @@ import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { getSelectedInput } from "../app/features/globalSlice";
 import {
+  selectBundleById,
   selectBundleCode,
   selectBundleError,
+  selectBundleLoading,
 } from "@/app/features/bundleSlice";
+import { GridLoader } from "react-spinners";
 
 type Props = {
   language: string;
@@ -16,6 +19,9 @@ const PreviwCode: React.FC<Props> = ({ language, id }) => {
   const inputCode = useSelector(getSelectedInput);
   const code = useSelector(selectBundleCode(id as string));
   const error = useSelector(selectBundleError(id as string));
+  const loading = useSelector(selectBundleLoading(id as string));
+  const bundle = useSelector(selectBundleById(id as string));
+  console.log(bundle, "bundle");
 
   const html = `
   <html>
@@ -84,18 +90,27 @@ handleError(event.error);
       clearTimeout(timer);
     };
   }, [code, html]);
-  return (
-    <div className="iframe-preview relative  flex-grow h-full after:content-[''] after:opacity-0 after:bg-transparent after:absolute after:top-0 after:bottom-0 after:left-0 after:right-[20px]">
-      <iframe
-        ref={iframeRef}
-        className="dark:bg-grayLight  bg-primaryBgLight w-full h-full"
-        title="Code Preview"
-        sandbox="allow-scripts"
-        srcDoc={html}
-      />
-      {error && <div className="error-msg">{error} </div>}
-    </div>
-  );
+
+  if (loading || !bundle) {
+    return (
+      <div className="flex justify-center items-center w-full">
+        <GridLoader color="#60a2d8" margin={3} />
+      </div>
+    );
+  } else {
+    return (
+      <div className="iframe-preview relative  flex-grow h-full after:content-[''] after:opacity-0 after:bg-transparent after:absolute after:top-0 after:bottom-0 after:left-0 after:right-[20px]">
+        <iframe
+          ref={iframeRef}
+          className="dark:bg-grayLight  bg-primaryBgLight w-full h-full"
+          title="Code Preview"
+          sandbox="allow-scripts"
+          srcDoc={html}
+        />
+        {error && <div className="error-msg">{error} </div>}
+      </div>
+    );
+  }
 };
 
 export default PreviwCode;

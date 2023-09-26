@@ -3,12 +3,18 @@ import DarkMode from "./components/DarkMode";
 import { useAppDispatch } from "./app/store";
 import { toggleDarkMode } from "./app/features/globalSlice";
 import CellList from "./components/CellList";
+import { insertCellBefore } from "./app/features/cellSlice";
 
 function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(toggleDarkMode());
+    dispatch(
+      insertCellBefore({
+        type: "code",
+      })
+    );
     localStorage.setItem("language", "javascript");
   }, [dispatch]);
 

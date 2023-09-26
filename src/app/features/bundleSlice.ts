@@ -32,7 +32,11 @@ export const bundleCells = createAsyncThunk(
 const bundleSlice = createSlice({
   initialState,
   name: "bundle",
-  reducers: {},
+  reducers: {
+    deleteBundle: (state, action) => {
+      delete state[action.payload.id];
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(bundleCells.pending, (state, action) => {
@@ -65,6 +69,7 @@ const bundleSlice = createSlice({
 
 export default bundleSlice.reducer;
 
+export const { deleteBundle } = bundleSlice.actions;
 export const selectBundleById =
   (id: string) => (state: { bundle: BundleState }) => {
     return state.bundle[id];
@@ -76,4 +81,8 @@ export const selectBundleCode =
 export const selectBundleError =
   (id: string) => (state: { bundle: BundleState }) => {
     return state.bundle[id]?.error;
+  };
+export const selectBundleLoading =
+  (id: string) => (state: { bundle: BundleState }) => {
+    return state.bundle[id]?.loading;
   };
