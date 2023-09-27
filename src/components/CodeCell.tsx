@@ -20,7 +20,27 @@ const CodeCell = (props: Cell) => {
 
   const getCumulativeContent = createSelector([getCells], (cell) => {
     const orderedCells = cell.order.map((id) => cell.data[id]);
-    const cumulativeContent = [];
+    const cumulativeContent = [
+      `
+      function show(input){
+        const root = document.querySelector("#root");
+        if(typeof input === 'object'){
+          if(input.$$typeof && input.props){
+            //this is for react elements
+           ReactDom.render(input,root)
+              
+            
+          }else{
+            root.innerHTML = JSON.stringify(input);
+          }
+        }
+        else{
+          root.innerHTML = input;
+        }
+
+      }
+      `,
+    ];
     for (const c of orderedCells) {
       if (c.type === "code") {
         cumulativeContent.push(c.content);
@@ -32,7 +52,7 @@ const CodeCell = (props: Cell) => {
     return cumulativeContent;
   });
   const cumulativeContent = useSelector(getCumulativeContent);
-
+  console.log(cumulativeContent);
   useEffect(() => {
     const timer = setTimeout(async () => {
       const results: MyArgs = {
