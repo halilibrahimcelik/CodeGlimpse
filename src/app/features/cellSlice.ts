@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
 const initialState: CellState = {
   data: {},
@@ -127,3 +128,50 @@ export const getAlertMessage = (state: { cell: CellState }) =>
   state.cell.alertMessage;
 export const isActiveMessage = (state: { cell: CellState }) =>
   state.cell?.alertMessage?.active;
+
+const getCells = (state: RootState) => state.cell;
+
+export const useCumulativeCode = (cellId: string) => {
+  return createSelector([getCells], (cell) => {
+    const orderedCells = cell.order.map((id) => cell.data[id]);
+
+    const showFn = `
+   import _React from 'react';
+   import _ReactDom from 'react-dom';
+
+   var show=(input)=>{
+     const root = document.querySelector("#root");
+     if(typeof input === 'object'){
+       if(input.$$typeof && input.props){
+         //this is for react elements
+        _ReactDom.render(input,root)
+           
+         
+       }else{
+         root.innerHTML = JSON.stringify(input);
+       }
+     }
+     else{
+       root.innerHTML = input;
+     }
+
+   }
+   `;
+    const showFnNoop = `var show=()=>{}`;
+    const cumulativeContent = [];
+    for (const c of orderedCells) {
+      if (c.type === "code") {
+        if (c.id === cellId) {
+          cumulativeContent.push(showFn);
+        } else {
+          cumulativeContent.push(showFnNoop);
+        }
+        cumulativeContent.push(c.content);
+      }
+      if (c.id === cellId) {
+        break;
+      }
+    }
+    return cumulativeContent;
+  });
+};
