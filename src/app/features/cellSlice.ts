@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 const initialState: CellState = {
   data: {},
   order: [],
@@ -6,6 +7,7 @@ const initialState: CellState = {
     message: null,
     active: false,
   },
+  mergeContent: [],
 };
 
 export interface CellState {
@@ -17,6 +19,7 @@ export interface CellState {
     message: null | string;
     active: boolean;
   };
+  mergeContent?: string[];
 }
 export enum Direction {
   UP = "up",
@@ -79,6 +82,7 @@ const cellSlice = createSlice({
         state.order[nextIndex] = identity; //we swap the order of the cells in the order array
       }
     },
+
     insertCellBefore(state, action) {
       const randomId = () => {
         return Math.random().toString(36).substring(2, 5);
