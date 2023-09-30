@@ -1,6 +1,7 @@
 import express from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import path from "path";
+import { createCellRouter } from "./routes/cell";
 export const serveLocalAPI = (
   port: number,
   filename: string,
@@ -23,6 +24,9 @@ export const serveLocalAPI = (
 
     app.use(express.static(path.dirname(packagePath)));
   }
+
+  //we wired up our cell router to our express app
+  app.use(createCellRouter(filename, dir));
 
   return new Promise<void>((resolve, reject) => {
     app.listen(port, resolve).on("error", reject);

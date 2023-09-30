@@ -2,6 +2,8 @@ import path from "path";
 import { Command } from "commander";
 import { serveLocalAPI } from "local-api";
 
+const isProduction = process.env.NODe_ENV === "production";
+
 export const serveCommand = new Command()
   .command("serve [filename]")
   .description("Open a file for editing")
@@ -13,7 +15,7 @@ export const serveCommand = new Command()
         parseInt(options.port),
         path.basename(filename),
         directory,
-        true
+        !isProduction
       );
       console.log(`
     🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 
