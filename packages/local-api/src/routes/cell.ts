@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import fs from "fs/promises";
+import fs from "fs";
 import path from "path";
 interface Cell {
   id: string;
@@ -14,14 +14,14 @@ export const createCellRouter = (filename: string, dir: string) => {
   router.use(express.json());
   const fullPath = path.join(dir, filename);
 
-  router.get("/cells", async (req: Request, res: Response) => {
+  router.get("/cells", (req: Request, res: Response) => {
     const isLocalApiError = (err: any): err is LocalApiError => {
       return typeof err.code === "string";
     };
 
     try {
       //Read the file
-      const result = await fs.readFile(fullPath, { encoding: "utf-8" });
+      const result = fs.readFileSync(fullPath, { encoding: "utf-8" });
       res.send(JSON.parse(result));
     } catch (error) {
       //Inspect the error, if the error says that the file doesnt exist
@@ -29,7 +29,7 @@ export const createCellRouter = (filename: string, dir: string) => {
       if (isLocalApiError(error)) {
         if (error.code === "ENOENT") {
           //we create a file and add default cells
-          await fs.writeFile(fullPath, "[]", "utf-8");
+          fs.writeFileSync(fullPath, "[]", "utf-8");
           res.send([]);
         }
       } else {
@@ -42,14 +42,14 @@ export const createCellRouter = (filename: string, dir: string) => {
 
     // res.send({ hi: "there" });
   });
-  router.post("/cells", async (req, res) => {
+  router.post("/cells", (req, res) => {
     //Take the list of cells from the request object
     //Serialize them
     const { cells }: { cells: Cell[] } = req.body;
 
     //Write the cells into the file
     try {
-      await fs.writeFile(fullPath, JSON.stringify(cells), "utf-8");
+      fs.writeFileSync(fullPath, JSON.stringify(cells), "utf-8");
       res.send({ status: "ok" });
       console.log("Saved successfully");
     } catch (error) {
