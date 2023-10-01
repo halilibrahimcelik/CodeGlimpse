@@ -1,5 +1,10 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../store";
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+} from "@reduxjs/toolkit";
+import { RootState, store } from "../store";
+import axios from "axios";
 
 const initialState: CellState = {
   data: {},
@@ -8,7 +13,8 @@ const initialState: CellState = {
     message: null,
     active: false,
   },
-  mergeContent: [],
+  loading: false,
+  error: null,
 };
 
 export interface CellState {
@@ -20,7 +26,8 @@ export interface CellState {
     message: null | string;
     active: boolean;
   };
-  mergeContent?: string[];
+  loading: boolean;
+  error: string | null;
 }
 export enum Direction {
   UP = "up",
@@ -30,10 +37,19 @@ export type cellType = "code" | "text";
 
 export interface Cell {
   id: string | null;
-  direction: Direction.UP | Direction.DOWN;
+  direction?: Direction.UP | Direction.DOWN;
   type: cellType;
   content: string;
 }
+export const fetchCells = createAsyncThunk("cells/fetchCells", async () => {
+  try {
+    const { data }: { data: Cell[] } = await axios.get("/cells");
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 const cellSlice = createSlice({
   name: "cell",
@@ -41,7 +57,8 @@ const cellSlice = createSlice({
   reducers: {
     updateCell(state, action) {
       const { id, content } = action.payload;
-
+      const bundleSlice = store.getState().bundle;
+      console.log(bundleSlice);
       state.data[id] = { ...state.data[id], content };
     },
     warningMessage(state) {
@@ -106,6 +123,36 @@ const cellSlice = createSlice({
     clearAlertMessage(state) {
       state.alertMessage = { message: null, active: false };
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchCells.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.order = action.payload.map((cell) => cell.id) as string[];
+          state.loading = false;
+          state.error = null;
+          state.data = action.payload.reduce(
+            (acc, cell) => {
+              if (cell?.id != null) {
+                acc[cell.id] = {
+                  ...cell,
+                  direction: Direction.UP,
+                };
+              }
+              return acc;
+            },
+            {} as CellState["data"]
+          );
+        }
+      })
+      .addCase(fetchCells.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchCells.rejected, (state, action) => {
+        state.error = action.error.message as string;
+        state.loading = false;
+      });
   },
 });
 
