@@ -10,6 +10,9 @@ export const serveLocalAPI = (
 ) => {
   const app = express();
 
+  //we wired up our cell router to our express app
+  app.use(createCellRouter(filename, dir));
+
   if (useProxy) {
     app.use(
       createProxyMiddleware({
@@ -24,9 +27,6 @@ export const serveLocalAPI = (
 
     app.use(express.static(path.dirname(packagePath)));
   }
-
-  //we wired up our cell router to our express app
-  app.use(createCellRouter(filename, dir));
 
   return new Promise<void>((resolve, reject) => {
     app.listen(port, resolve).on("error", reject);

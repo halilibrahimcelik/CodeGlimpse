@@ -1,11 +1,12 @@
 import {
+  createAction,
   createAsyncThunk,
   createSelector,
   createSlice,
 } from "@reduxjs/toolkit";
 import { RootState, store } from "../store";
 import axios from "axios";
-
+import { Middleware } from "redux";
 const initialState: CellState = {
   data: {},
   order: [],
@@ -41,6 +42,23 @@ export interface Cell {
   type: cellType;
   content: string;
 }
+
+const triggerSaveCells = createAction("cells/triggerSaveCells");
+
+export const saveCellsMiddleware: Middleware =
+  (store) => (next) => (action) => {
+    switch (action.type) {
+      case "cell/updateCell":
+      case "cell/deleteCell":
+      case "cell/moveCell":
+      case "cell/insertCellBefore":
+        store.dispatch(triggerSaveCells()); // Dispatch triggerSaveCells action
+        break;
+      default:
+        break;
+    }
+    return next(action);
+  };
 export const fetchCells = createAsyncThunk("cells/fetchCells", async () => {
   try {
     const { data }: { data: Cell[] } = await axios.get("/cells");
@@ -51,14 +69,22 @@ export const fetchCells = createAsyncThunk("cells/fetchCells", async () => {
   }
 });
 
+export const saveCells = createAsyncThunk("cells/saveCells", async () => {
+  try {
+    const { data, order } = store.getState().cell;
+    const cells = order.map((id) => data[id]);
+    await axios.post("/cells", { cells });
+  } catch (error) {
+    console.log(error);
+  }
+});
 const cellSlice = createSlice({
   name: "cell",
   initialState,
   reducers: {
     updateCell(state, action) {
       const { id, content } = action.payload;
-      const bundleSlice = store.getState().bundle;
-      console.log(bundleSlice);
+
       state.data[id] = { ...state.data[id], content };
     },
     warningMessage(state) {
@@ -136,7 +162,7 @@ const cellSlice = createSlice({
               if (cell?.id != null) {
                 acc[cell.id] = {
                   ...cell,
-                  direction: Direction.UP,
+                  direction: Direction.DOWN,
                 };
               }
               return acc;
@@ -152,6 +178,13 @@ const cellSlice = createSlice({
       .addCase(fetchCells.rejected, (state, action) => {
         state.error = action.error.message as string;
         state.loading = false;
+      })
+
+      .addCase(saveCells.rejected, (state, action) => {
+        state.error = action.error.message as string;
+      })
+      .addCase(triggerSaveCells, () => {
+        saveCells();
       });
   },
 });

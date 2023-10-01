@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import fs from "fs/promises";
 import path from "path";
 interface Cell {
@@ -14,7 +14,7 @@ export const createCellRouter = (filename: string, dir: string) => {
   router.use(express.json());
   const fullPath = path.join(dir, filename);
 
-  router.get("/cells", async (req, res) => {
+  router.get("/cells", async (req: Request, res: Response) => {
     const isLocalApiError = (err: any): err is LocalApiError => {
       return typeof err.code === "string";
     };
@@ -40,7 +40,7 @@ export const createCellRouter = (filename: string, dir: string) => {
     //Parse a list of cells out of it
     //Send list of cells back to browser
 
-    res.send({ hi: "there" });
+    // res.send({ hi: "there" });
   });
   router.post("/cells", async (req, res) => {
     //Take the list of cells from the request object
@@ -48,8 +48,15 @@ export const createCellRouter = (filename: string, dir: string) => {
     const { cells }: { cells: Cell[] } = req.body;
 
     //Write the cells into the file
-    await fs.writeFile(fullPath, JSON.stringify(cells), "utf-8");
-    res.send({ status: "ok" });
+    try {
+      await fs.writeFile(fullPath, JSON.stringify(cells), "utf-8");
+      res.send({ status: "ok" });
+      console.log("Saved successfully");
+    } catch (error) {
+      if (error instanceof Error)
+        res.status(500).send({ error: error.message });
+      throw error;
+    }
   });
 
   return router;
