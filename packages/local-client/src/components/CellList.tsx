@@ -1,19 +1,33 @@
 import { useSelector } from "react-redux";
 
-import { getOrder, getData } from "../app/features/cellSlice";
+import {
+  getOrder,
+  getData,
+  fetchCells,
+  saveCells,
+} from "../app/features/cellSlice";
 import CellListItem from "./CellListItem";
 import AlertComponent from "./Alert";
 import { motion, LayoutGroup } from "framer-motion";
 import AddCell from "./AddCell";
+import { useAppDispatch } from "@/app/store";
+import { useEffect } from "react";
 
 const CellList = () => {
   const order = useSelector(getOrder);
   const data = useSelector(getData);
-
+  const dispatch = useAppDispatch();
   const cells = order.map((id) => {
     return data[id];
   });
 
+  useEffect(() => {
+    dispatch(fetchCells());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(saveCells());
+  }, [dispatch, order, data]);
   return (
     <LayoutGroup>
       <ul className="flex flex-col  py-10">

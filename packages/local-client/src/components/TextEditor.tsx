@@ -2,7 +2,12 @@ import { useState, useEffect } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import Container from "./Container";
 import { useAppDispatch } from "../app/store";
-import { Cell, updateCell } from "../app/features/cellSlice";
+import {
+  Cell,
+  CellState,
+  getContent,
+  updateCell,
+} from "../app/features/cellSlice";
 import {
   Tooltip,
   TooltipContent,
@@ -10,10 +15,15 @@ import {
   TooltipTrigger,
 } from "@/components/UI/ui/tooltip";
 import ActionBar from "./ActionBar";
+import { useSelector } from "react-redux";
 
 const TextEditor = ({ id }: Cell) => {
   const [edit, setEdit] = useState<boolean>(false);
-  const [value, setValue] = useState<string>("");
+  const content = useSelector((state: { cell: CellState }) =>
+    getContent(state, id as string)
+  );
+  const [value, setValue] = useState<string>(content);
+
   const dispatch = useAppDispatch();
 
   const actionBar = document.querySelector(".actionBar" + id)!;
@@ -48,10 +58,10 @@ const TextEditor = ({ id }: Cell) => {
       <Container>
         {" "}
         <MDEditor
+          value={value}
           className="cursor-pointer text-editor mt-10  bg-gray-600"
           data-id={id}
-          value={value}
-          onChange={(v) => setValue(v || "")}
+          onChange={(v) => setValue(v as string)}
         />
       </Container>
     );
@@ -72,7 +82,7 @@ const TextEditor = ({ id }: Cell) => {
             <TooltipTrigger>
               <MDEditor.Markdown
                 className="cursor-pointer h-[300px] shadow-md preview-editor list-disc    border-[3px] rounded-md p-2.5   dark:border-gray-600 dark:text-white dark:bg-primaryBgLight"
-                source={value}
+                source={content}
                 style={{ whiteSpace: "pre-wrap" }}
               />
             </TooltipTrigger>

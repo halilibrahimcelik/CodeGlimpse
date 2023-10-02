@@ -1,6 +1,12 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../store";
-
+import {
+  createAction,
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+} from "@reduxjs/toolkit";
+import { RootState, store } from "../store";
+import axios from "axios";
+import { Middleware } from "redux";
 const initialState: CellState = {
   data: {},
   order: [],
@@ -8,7 +14,8 @@ const initialState: CellState = {
     message: null,
     active: false,
   },
-  mergeContent: [],
+  loading: false,
+  error: null,
 };
 
 export interface CellState {
@@ -20,7 +27,8 @@ export interface CellState {
     message: null | string;
     active: boolean;
   };
-  mergeContent?: string[];
+  loading: boolean;
+  error: string | null;
 }
 export enum Direction {
   UP = "up",
@@ -30,11 +38,46 @@ export type cellType = "code" | "text";
 
 export interface Cell {
   id: string | null;
-  direction: Direction.UP | Direction.DOWN;
+  direction?: Direction.UP | Direction.DOWN;
   type: cellType;
   content: string;
 }
 
+const triggerSaveCells = createAction("cells/triggerSaveCells");
+
+export const saveCellsMiddleware: Middleware =
+  (store) => (next) => (action) => {
+    switch (action.type) {
+      case "cell/updateCell":
+      case "cell/deleteCell":
+      case "cell/moveCell":
+      case "cell/insertCellBefore":
+        store.dispatch(triggerSaveCells()); // Dispatch triggerSaveCells action
+        break;
+      default:
+        break;
+    }
+    return next(action);
+  };
+export const fetchCells = createAsyncThunk("cells/fetchCells", async () => {
+  try {
+    const { data }: { data: Cell[] } = await axios.get("/cells");
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+export const saveCells = createAsyncThunk("cells/saveCells", async () => {
+  try {
+    const { data, order } = store.getState().cell;
+    const cells = order.map((id) => data[id]);
+    await axios.post("/cells", { cells });
+  } catch (error) {
+    console.log(error);
+  }
+});
 const cellSlice = createSlice({
   name: "cell",
   initialState,
@@ -106,6 +149,43 @@ const cellSlice = createSlice({
     clearAlertMessage(state) {
       state.alertMessage = { message: null, active: false };
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchCells.fulfilled, (state, action) => {
+        if (action.payload) {
+          state.order = action.payload.map((cell) => cell.id) as string[];
+          state.loading = false;
+          state.error = null;
+          state.data = action.payload.reduce(
+            (acc, cell) => {
+              if (cell?.id != null) {
+                acc[cell.id] = {
+                  ...cell,
+                  direction: Direction.DOWN,
+                };
+              }
+              return acc;
+            },
+            {} as CellState["data"]
+          );
+        }
+      })
+      .addCase(fetchCells.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchCells.rejected, (state, action) => {
+        state.error = action.error.message as string;
+        state.loading = false;
+      })
+
+      .addCase(saveCells.rejected, (state, action) => {
+        state.error = action.error.message as string;
+      })
+      .addCase(triggerSaveCells, () => {
+        saveCells();
+      });
   },
 });
 

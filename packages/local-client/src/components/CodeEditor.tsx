@@ -26,7 +26,7 @@ interface CodeEditorProps extends Cell {
 const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, id, type }) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const [language, setLanguage] = useState<string>("javascript");
-  const [code, setCode] = useState<string>("");
+  const [code, setCode] = useState<string>(initialValue);
   const isDarkMode = useSelector(selectDarkMode);
   const dispatch = useAppDispatch();
 

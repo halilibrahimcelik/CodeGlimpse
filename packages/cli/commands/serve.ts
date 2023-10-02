@@ -1,7 +1,8 @@
 import path from "path";
 import { Command } from "commander";
 import { serveLocalAPI } from "local-api";
-import { exit } from "process";
+
+const isProduction = process.env.NODe_ENV === "production";
 
 export const serveCommand = new Command()
   .command("serve [filename]")
@@ -13,14 +14,15 @@ export const serveCommand = new Command()
       await serveLocalAPI(
         parseInt(options.port),
         path.basename(filename),
-        directory
+        directory,
+        !isProduction
       );
       console.log(`
     🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 🎉 
 
     Congratilations! You have successfully opened the file for editing.
      
-    In order to  opened ${filename}  please navigate to below link  to edit the file ⬇ ⬇ ⬇ .
+    In order to  opened ${filename}  please navigate to below link  to edit the file ⬇ ⬇ ⬇ 
       `);
       console.log(
         "\x1b[1m\x1b[34m%s\x1b[0m",

@@ -7,13 +7,20 @@ import Resizeable from "./Resizeable";
 import { useSelector } from "react-redux";
 
 import { useAppDispatch } from "../app/store";
-import { Cell, useCumulativeCode } from "../app/features/cellSlice";
+import {
+  Cell,
+  CellState,
+  getContent,
+  useCumulativeCode,
+} from "../app/features/cellSlice";
 import { MyArgs, bundleCells } from "@/app/features/bundleSlice";
 
 const CodeCell = (props: Cell) => {
   const dispatch = useAppDispatch();
   const cumulativeContent = useSelector(useCumulativeCode(props?.id as string));
-
+  const content = useSelector((state: { cell: CellState }) =>
+    getContent(state, props?.id as string)
+  );
   useEffect(() => {
     const timer = setTimeout(async () => {
       const results: MyArgs = {
@@ -32,7 +39,7 @@ const CodeCell = (props: Cell) => {
     <Container>
       <Resizeable
         direction="vertical"
-        children={<CodeEditor {...props} initialValue={""} />}
+        children={<CodeEditor {...props} initialValue={content} />}
       />
     </Container>
   );
