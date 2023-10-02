@@ -1,7 +1,10 @@
 {
-  "name": "local-api",
+  "name": "@codepadjs/local-api",
   "version": "1.0.0",
   "description": "",
+  "files": [
+    "dist"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -17,7 +20,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "codebook": "^0.0.0",
+    "@codepadjs/local-client": "^1.0.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "http-proxy-middleware": "^2.0.6"

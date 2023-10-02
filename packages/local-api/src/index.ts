@@ -22,7 +22,9 @@ export const serveLocalAPI = (
       })
     );
   } else {
-    const packagePath = require.resolve("codebook/dist/index.html");
+    const packagePath = require.resolve(
+      "@codepadjs/local-client/dist/index.html"
+    );
     //packagePath is the path to the index.html file in the codebook package in node_modules
 
     app.use(express.static(path.dirname(packagePath)));

@@ -1,7 +1,10 @@
 {
-  "name": "codebook",
+  "name": "@codepadjs/local-client",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "scripts": {
     "start": "vite",
