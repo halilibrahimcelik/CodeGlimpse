@@ -2,7 +2,7 @@ import path from "path";
 import { Command } from "commander";
 import { serveLocalAPI } from "@codepadjs/local-api";
 
-const isProduction = process.env.NODe_ENV === "production";
+const isProduction = process.env.NODE_ENV === "production";
 
 export const serveCommand = new Command()
   .command("serve [filename]")
