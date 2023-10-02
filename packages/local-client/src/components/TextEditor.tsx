@@ -26,7 +26,6 @@ const TextEditor = ({ id }: Cell) => {
 
   const dispatch = useAppDispatch();
 
-  console.log(content, "content");
   const actionBar = document.querySelector(".actionBar" + id)!;
 
   useEffect(() => {

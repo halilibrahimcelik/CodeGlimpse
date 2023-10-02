@@ -47,7 +47,6 @@ const triggerSaveCells = createAction("cells/triggerSaveCells");
 
 export const saveCellsMiddleware: Middleware =
   (store) => (next) => (action) => {
-    console.log(action.type);
     switch (action.type) {
       case "cell/updateCell":
       case "cell/deleteCell":
