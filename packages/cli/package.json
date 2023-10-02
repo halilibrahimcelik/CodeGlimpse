@@ -1,6 +1,6 @@
 {
   "name": "codepadjs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "files": [
     "dist"
@@ -17,7 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@codepadjs/local-client": "^1.0.0"
+    "@codepadjs/local-client": "^1.0.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.14",
