@@ -5,8 +5,13 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": "dist/index.js",
   "scripts": {
-    "start": "tsc --watch --preserveWatchOutput"
+    "start": "tsc --watch --preserveWatchOutput",
+    "prepublishOnly": "tsc"
   },
   "keywords": [],
   "author": "",
