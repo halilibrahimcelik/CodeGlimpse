@@ -105,11 +105,16 @@ html {
   background-color: #293642;
   border-bottom: 1px solid gray;
 }
-
+.dark .w-md-editor-text-pre .token.content {
+  color: #fff !important;
+}
 .text-editor .w-md-editor-toolbar li button {
   color: #d4d4d4;
 }
-
+.wmde-markdown {
+  color: #111 !important;
+  background: #f2f2f2 !important;
+}
 .dark .text-editor .w-md-editor-content {
   background-color: #141b29;
   color: #fff;

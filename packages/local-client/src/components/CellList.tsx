@@ -12,6 +12,7 @@ import { motion, LayoutGroup } from "framer-motion";
 import AddCell from "./AddCell";
 import { useAppDispatch } from "@/app/store";
 import { useEffect } from "react";
+import Greetings from "./Greetings";
 
 const CellList = () => {
   const order = useSelector(getOrder);
@@ -39,6 +40,7 @@ const CellList = () => {
           className="flex flex-col gap-10"
           transition={{ duration: 0.5, staggerChildren: 0.1 }}
         >
+          <Greetings />
           <AddCell id={null} />
         </motion.li>
         {cells.map((cell) => (
