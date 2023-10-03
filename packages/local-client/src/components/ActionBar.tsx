@@ -28,7 +28,12 @@ const ActionBar = ({ id, type }: Props) => {
   };
   const handleDelete = () => {
     setConfirm(true);
-    dispatch(warningMessage());
+    dispatch(
+      warningMessage({
+        message: "Are you sure you want to delete this cell?",
+        active: true,
+      })
+    );
     if (confirm) {
       dispatch(deleteCell({ id }));
       dispatch(deleteBundle({ id }));

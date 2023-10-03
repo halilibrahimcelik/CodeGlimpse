@@ -1,10 +1,11 @@
 import { useSelector } from "react-redux";
-
+import { IoCopyOutline } from "react-icons/io5";
 import {
   getOrder,
   getData,
   fetchCells,
   saveCells,
+  getAlertMessage,
 } from "../app/features/cellSlice";
 import CellListItem from "./CellListItem";
 import AlertComponent from "./Alert";
@@ -13,10 +14,12 @@ import AddCell from "./AddCell";
 import { useAppDispatch } from "@/app/store";
 import { useEffect } from "react";
 import Greetings from "./Greetings";
+import { AiOutlineWarning } from "react-icons/ai";
 
 const CellList = () => {
   const order = useSelector(getOrder);
   const data = useSelector(getData);
+  const alertMessage = useSelector(getAlertMessage);
   const dispatch = useAppDispatch();
   const cells = order.map((id) => {
     return data[id];
@@ -57,7 +60,15 @@ const CellList = () => {
             <AddCell id={cell.id} />
           </motion.li>
         ))}
-        <AlertComponent />
+        <AlertComponent
+          icon={
+            alertMessage?.message === "Copied to clipboard" ? (
+              <IoCopyOutline />
+            ) : (
+              <AiOutlineWarning />
+            )
+          }
+        />
       </ul>
     </LayoutGroup>
   );

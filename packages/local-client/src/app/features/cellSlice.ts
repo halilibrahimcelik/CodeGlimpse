@@ -87,10 +87,12 @@ const cellSlice = createSlice({
 
       state.data[id] = { ...state.data[id], content };
     },
-    warningMessage(state) {
+    warningMessage(state, action) {
       state.alertMessage = {
-        message: "Are you sure you want to delete this cell?",
-        active: true,
+        message: action.payload.message
+          ? action.payload.message
+          : "Are you sure you want to delete this cell?",
+        active: action.payload.active ? action.payload.active : true,
       };
     },
     deleteCell(state, action) {
