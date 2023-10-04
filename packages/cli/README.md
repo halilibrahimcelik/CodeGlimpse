@@ -27,8 +27,12 @@ To install codepadjs run the following command in your terminal:
 
 -You can facilitate the use of the Code Editor by using the following shortcuts:
 
--`show()` function ![image](assets/show.png)
--Tailwind also integrated into Code Editor. So you dont have to worry about intagrating UI library. You can use Tailwind by typing `className=""` in your JSX code. ![image](assets/tailwind.png)
+-`show()` function
+
+![image](assets/show.png)
+
+-Tailwind also integrated into Code Editor. So you dont have to worry about intagrating UI library. You can use Tailwind by typing
+`className=""` in your JSX code.
 
 - Happy coding!
 
