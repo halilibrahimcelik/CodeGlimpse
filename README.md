@@ -43,3 +43,14 @@ ISC
 ## Author
 
 [Halil İbrahim Çelik](https://www.linkedin.com/in/halil-ibrahim-celik/)
+
+## Contributing
+
+If you would like to contribute to the development of this extension, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them with clear and descriptive messages.
+4. Push your changes to your fork.
+5. Submit a pull request.
+
