@@ -51,13 +51,17 @@ body {
   cursor: row-resize;
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=");
 }
+.w-md-editor-text {
+  padding: 20px;
+}
 .wmde-markdown-color {
   border-radius: 10px;
   padding: 20px;
   background-color: #fff;
 }
-.dark .wmde-markdown-color {
+.dark .w-md-editor-text .wmde-markdown-color {
   background-color: unset;
+  padding: 0;
 }
 .dark .w-md-editor-text-pre .token.code.keyword {
   color: #fff !important;
