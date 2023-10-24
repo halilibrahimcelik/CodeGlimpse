@@ -45,6 +45,16 @@ const Greetings = () => {
           </code>{" "}
           command on your terminal.
         </p>
+        <p>
+          By default React is integrated into Code Editor. So you don't have
+          worry about importing React. With{" "}
+          <code className="dark:bg-slate-300 cursor-pointer bg-primaryBg text-white font-bold rounded-md px-1 dark:text-black">
+            {" "}
+            show(){" "}
+          </code>{" "}
+          function you can insert React component in Code Editor{" "}
+        </p>
+        <p>You can also use TailwindCSS in your JSX code as well</p>
       </motion.article>
     </Container>
   );

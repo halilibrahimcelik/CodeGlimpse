@@ -81,7 +81,7 @@ const TextEditor = ({ id }: Cell) => {
           <Tooltip>
             <TooltipTrigger>
               <MDEditor.Markdown
-                className="cursor-pointer h-[300px] shadow-md preview-editor list-disc    border-[3px] rounded-md p-2.5   dark:border-gray-600 dark:text-white dark:bg-primaryBgLight"
+                className="cursor-pointer h-[300px] shadow-md preview-editor list-disc  overflow-auto   border-[3px] rounded-md p-2.5   dark:border-gray-600 dark:text-white dark:bg-primaryBgLight"
                 source={content}
                 style={{ whiteSpace: "pre-wrap" }}
               />
