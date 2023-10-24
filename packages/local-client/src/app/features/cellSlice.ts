@@ -136,7 +136,11 @@ const cellSlice = createSlice({
       const cell: Cell = {
         id: randomId(),
         type: action.payload.type,
-        content: "",
+        content: `const App=()=>{
+return <h1 class="mx-auto text-center uppercase">Hello World</h1>
+}
+ show(<App/>);
+      `,
         direction: Direction.UP,
       };
       cell.id ? (state.data[cell.id] = cell) : false; // => we add the new cell to the data object
